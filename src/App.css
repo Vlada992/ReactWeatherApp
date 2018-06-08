@@ -1,0 +1,242 @@
+.weather__container {
+    margin-top: 5%;
+    border: 10px solid #cecece;
+    width: 50%;
+    height: 600px;
+    background-color: #e5e5e5;
+    opacity: 0.5;
+    display: flex;
+    box-shadow: 64px -12px 44px 60px #888888;
+    flex-direction: column;
+    /* flex-direction:row;
+  flex-flow: row wrap;*/
+}
+
+body {
+    background-image: url('images/bigCloud1.jpg');
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-bottom: 20%;
+}
+
+#stajlTempNow {
+    font-size: 40px;
+    color: #ff7314;
+    font-weight: 900;
+    height: auto;
+    /*40px;*/
+    width: 50%;
+    margin-left: 0%;
+    margin-right: 0%;
+    margin-bottom: 1%;
+    display: inline-flex;
+    background-color: ;
+    background-color: #cecece;
+    border: 1px solid #b7b7b7;
+}
+
+#stajlTempNowA {
+    font-size: 12px;
+    color: black;
+    font-weight: 700;
+    opacity: 1;
+    display: inline-flex;
+    height: auto;
+    /*40px;*/
+    padding-top: 1%;
+    flex-wrap: wrap;
+}
+
+#stajlC {
+    font-size: 15px;
+    height: auto;
+}
+
+#spanId1 {
+    font-family: 'Arial';
+    color: black;
+    font-size: 20px;
+    font-weight: 600;
+    height: auto;
+    /*40px;*/
+}
+
+#stajlPress {
+    font-weight: 800;
+    color: red;
+    display: inline-flex;
+    width: 50%;
+    margin-left: 0%;
+    height: auto;
+    /*40px;*/
+}
+
+#pressTitl {
+    font-weight: 900;
+    color: black;
+}
+
+#titleCity {
+    font-weight: 900;
+    color: red;
+    opacity: 0.9;
+    /*font-variant:small-caps;*/
+    height: auto;
+    /*40px;*/
+    margin-top: 6%;
+    font-size: 30px;
+    width: 50%;
+    margin-left: 0%;
+    margin-bottom: 10%;
+}
+
+#stajlClear {
+    font-weight: 800;
+    color: red;
+    height: auto;
+    /*40px;*/
+    width: 50%;
+    margin-left: 0%;
+}
+
+#celzId {
+    font-size: 20px;
+    color: #ff7314;
+    font-weight: 900;
+    opacity: 0.9;
+    height: auto;
+    /*40px;*/
+    display: inline-flex;
+}
+
+#time1 {
+    font-weight: 800;
+    color: red;
+    height: auto;
+    /*40px;*/
+    margin-bottom: 1%;
+    width: 50%;
+    margin-left: 0%;
+}
+
+
+#hoverDay1 {
+    color: black;
+    font-weight: 900;
+    font-family: 'Verdana';
+}
+
+#timeId1 {
+    background-color: #cecece;
+    /*#e5e5e5;*/
+    opacity: 1;
+    padding: 1%;
+    height: auto;
+    font-weight: 900;
+    font-family: 'Arial';
+    border: 1px solid #b7b7b7;
+}
+
+
+#uvindex {
+    font-weight: 900;
+    color: black;
+    width: 50%;
+    margin-left: 0%;
+}
+
+#redUv {
+    color: red;
+}
+
+#visibleId {
+    font-weight: 900;
+    color: black;
+    width: 50%;
+    margin-left: 0%;
+}
+
+#redVisb {
+    color: red;
+}
+
+#windId {
+    font-weight: 900;
+    color: black;
+    width: 50%;
+    margin-left: 0%;
+}
+
+#redWindDir {
+    color: red;
+}
+
+#windSpid {
+    font-weight: 900;
+    color: black;
+    width: 50%;
+    margin-left: 0%;
+}
+
+.spidWind {
+    color: red;
+}
+
+#windTemp {
+    color: black;
+    margin-left: 0%;
+    font-size: 12px;
+    width: auto;
+    /*margin-bottom:25%;*/
+}
+
+
+#apparTemp {
+    color: black;
+    margin-left: 0%;
+    font-size: 12px;
+    width: auto;
+    margin-bottom: 25%;
+}
+
+#humiditR {
+    font-weight: 900;
+    color: black;
+    width: 50%;
+    margin-left: 0%;
+}
+
+#cloudCover {
+    font-weight: 900;
+    color: black;
+    width: 50%;
+    margin-left: 0%;
+}
+
+
+
+
+.dividerId {
+    font-size: 16px;
+    color: orange;
+    font-weight: 900;
+}
+
+
+
+#latLonId {
+    font-size: 11px;
+    color: black;
+    display: flex;
+}
+
+#populId {
+    color: blue;
+}
+
+
+.allRed {
+    color: red;
+}

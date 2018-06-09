@@ -9,7 +9,7 @@ class App extends Component {
         this.KmToMi = this.KmToMi.bind(this);
         this.timeHover = this.timeHover.bind(this);
         this.outHover = this.outHover.bind(this);
-        this.oneTwo = false;
+        this.togleR = false;
         this.state = {
             tempNowA: '',
             tempUnitA: '',
@@ -49,59 +49,63 @@ class App extends Component {
             visibleFor: '',
             timeZn: '',
             currTime1: '',
-            tmZonUrl: ''
+            tmZonUrl: '',
+            pressTend: '',
+            uvText: ''
         }
     };
-    ChangeToF(){
-        if (this.oneTwo == false) {
-            this.state.tempNow = this.state.tempNowF
-            this.state.tempNowA = this.state.tempNowAF;
-            this.state.apparTemp = this.state.apparTempF
-            this.state.windChillT = this.state.windChillTF;
-            this.oneTwo = true
+    ChangeToF(event) {
+        let tempNow = { ...this.state.tempNow, hit1: this.state.tempNowF, hit11: this.state.tempNowFor };
+        let apparTemp = { ...this.state.apparTemp, hit2: this.state.apparTempF, hit22: this.state.apparTempFor };
+        let tempNowA = { ...this.state.tempNowA, hit3: this.state.tempNowAF, hit33: this.state.tempNowAFor };
+        let windChillT = { ...this.state.windChillT, hit4: this.state.windChillTF, hit44: this.state.windChillFor };
+        if (this.togleR === false) {
+            this.setState({ tempNow: tempNow.hit1 })
+            this.setState({ apparTemp: apparTemp.hit2 })
+            this.setState({ tempNowA: tempNowA.hit3 });
+            this.setState({ windChillT: windChillT.hit4 })
+            this.togleR = true
             document.getElementById('celzId').innerHTML = '&#8457;'
             document.getElementById('fahrId').innerHTML = '&#8451;'
             console.log(document.getElementsByClassName('all3'))
             document.getElementsByClassName('all3')[0].innerHTML = '&#8457;'
             document.getElementsByClassName('all3')[1].innerHTML = '&#8457;'
             document.getElementsByClassName('all3')[2].innerHTML = '&#8457;'
-        } else{
-            this.state.tempNow = this.state.tempNowFor
-            this.state.tempNowA = this.state.tempNowAFor;
-            this.state.apparTemp = this.state.apparTempFor;
-            this.state.windChillT = this.state.windChillFor;
+        } else {
+            this.setState({ tempNow: tempNow.hit11 })
+            this.setState({ tempNowA: tempNowA.hit33 })
+            this.setState({ apparTemp: apparTemp.hit22 })
+            this.setState({ windChillT: windChillT.hit44 })
             document.getElementById('celzId').innerHTML = '&#8451;'
             document.getElementById('fahrId').innerHTML = '&#8457;'
             document.getElementsByClassName('all3')[0].innerHTML = '&#8451;'
             document.getElementsByClassName('all3')[1].innerHTML = '&#8451;'
             document.getElementsByClassName('all3')[2].innerHTML = '&#8451;'
-            this.oneTwo = false;
+            this.togleR = false;
         }
     }
-
-    KmToMi(){
-        if (this.oneTwo == false) {
-            this.state.visible = this.state.visibleMi;
+    KmToMi() {
+        let visible = { ...this.state.visible, to1: this.state.visibleMi, to2: this.state.visibleFor }
+        if (this.oneTwo === false) {
+            this.setState({ visible: visible.to1 })
             this.oneTwo = true
             setTimeout(() => {
                 document.getElementById('mikm').innerHTML = 'km'
             }, 700);
-        }else{
-            this.state.visible = this.state.visibleFor;
+        } else {
+            this.setState({ visible: visible.to2 })
             this.oneTwo = false;
             document.getElementById('mikm').innerHTML = 'mi'
         }
     }
-    timeHover(){
+    timeHover() {
         document.getElementById('huvTime').style.opacity = '0.9';
     }
-
-    outHover(){
+    outHover() {
         document.getElementById('huvTime').style.opacity = '0';
-
     }
     componentDidMount() {
-        axios.get("http://dataservice.accuweather.com/currentconditions/v1/298198?apikey=HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG&details=true")
+        axios.get("http://dataservice.accuweather.com/currentconditions/v1/298198?apikey=u77BxK7btrmFq5ipbObhc868Ly8wkySl&details=true")
             .then(response => {
                 console.log("weather data:", response)
                 let tempNowF = response.data["0"].Temperature.Imperial.Value
@@ -113,11 +117,12 @@ class App extends Component {
                 let wetIcn = response.data["0"].WeatherIcon;
                 let pressTend = response.data["0"].PressureTendency.LocalizedText;
                 let pressVal = response.data["0"].Pressure.Metric.Value;
-                let currPress = pressVal + ` ` + response.data["0"].Pressure.Metric.Unit + ` ` + `(` + pressTend + `)`;
+                let currPress = pressVal + ` ` + response.data["0"].Pressure.Metric.Unit;
                 let clearW = response.data["0"].WeatherText;
                 let dayS = String(localStorage.getItem('myDays')).split(',')
                 let monthS = String(localStorage.getItem('myMonths')).split(',')
-                let uvInd = response.data["0"].UVIndex + ` ` + `(` + response.data["0"].UVIndexText + `)`;
+                let UvText = response.data["0"].UVIndexText;
+                let uvInd = response.data["0"].UVIndex;
                 let visbUnt = response.data["0"].Visibility.Metric.Unit;
                 let visbUntMi = response.data["0"].Visibility.Imperial.Unit;
                 let visible = response.data["0"].Visibility.Metric.Value + visbUnt;
@@ -139,7 +144,6 @@ class App extends Component {
                 let cloudCov = response.data["0"].CloudCover;
                 let ceeling1 = response.data["0"].Ceiling.Metric.Value;
                 let pointDew = response.data["0"].DewPoint.Metric.Value;
-
 
                 function windDirect(degree) {
                     if (degree > 337.5) return 'Northerly';
@@ -187,11 +191,13 @@ class App extends Component {
                     windChillFor,
                     visbUntMi,
                     visibleMi,
-                    visibleFor
+                    visibleFor,
+                    pressTend,
+                    UvText
                 })
             })
             .then(() => {
-                axios.get("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG&q=Belgrade%20Serbia&details=true&offset=20")
+                axios.get("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=u77BxK7btrmFq5ipbObhc868Ly8wkySl&q=Belgrade%20Serbia&details=true&offset=20")
                     .then(locInfo => {
                         console.log('info o location:', locInfo);
                         let cityCountN = locInfo.data["0"].AdministrativeArea.EnglishName + `, ` + locInfo.data["0"].Country.EnglishName;
@@ -221,14 +227,14 @@ class App extends Component {
            <div  onMouseEnter={this.timeHover}  onMouseLeave={this.outHover}  id='time1'><span id='timeId1'>{this.state.currTime}</span> </div> 
           <div id='stajlClear'>{this.state.clearW}</div>
           <div id ='cloudCover'> Cloudiness:  <span className='allRed'>{this.state.cloudCov}&#37;</span>  </div>         
-        <div id='pressTitl'>Pressure: &nbsp;<div id ='stajlPress'> &nbsp; {this.state.currPress}</div></div>
+        <div id='pressTitl'>Pressure: &nbsp;<div id ='stajlPress'> &nbsp; {this.state.currPress}&nbsp; (<span className='inBrack'>{this.state.pressTend}</span>)</div></div>
       <div id='stajlTempNow' className='container'> {this.state.tempNow} <div id='celzId'> &#8451;</div>&nbsp;<div onClick={this.ChangeToF} id='fahrId'>&#8457;</div> 
         <div id='stajlTempNowA' className='container'><div className='spanId1'>(Feels like: &nbsp;</div> <span className='tempInner'>{this.state.tempNowA} <span className='all3'> &#8451;</span></span>)
                <div id ='windTemp'>(Wind chill: <span className='tempInner'>{this.state.windChillT}  <span className='all3'> &#8451;</span></span>)</div>
           <div id ='apparTempId'>(Apparent temp:&nbsp;<span className='tempInner'>{this.state.apparTemp}  <span className='all3'> &#8451;</span></span>)</div>
   </div>
      </div>
-      <div id='uvindex'>UV index: <span id='redUv'>{this.state.uvInd}</span></div>
+      <div id='uvindex'>UV index: <span id='redUv'>{this.state.uvInd}&nbsp;(<span className='inBrack'>{this.state.UvText}</span>)</span></div>
       <div id ='visibleId'>Visibility:&nbsp;<span id='redVisb'>{this.state.visible}&nbsp;&nbsp;&nbsp; <span id='miId' onClick={this.KmToMi}> <span id='mikm'>&nbsp;mi</span></span> </span></div>
       <div id ='windId'>Wind direction:&nbsp; <span id='redWindDir'>{this.state.windWay}</span></div>
       <div id ='windSpid'>Wind speed: <span className='dividerId'>&#8739;</span> gust: &nbsp; <span className='spidWind'>{this.state.windSpd}</span> <span className='dividerId'> &#8739;</span>

@@ -294,3 +294,7 @@ body {
 .tempInner {
     color: #e56712;
 }
+.inBrack {
+  opacity:0.7;
+  color:#ff3232
+}

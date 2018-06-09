@@ -4,12 +4,14 @@
     width: 50%;
     height: 600px;
     background-color: #e5e5e5;
-    opacity: 0.5;
+    opacity: 0.7;
     display: flex;
     box-shadow: 64px -12px 44px 60px #888888;
     flex-direction: column;
-    /* flex-direction:row;
-  flex-flow: row wrap;*/
+    /* flex-direction:row;*/
+    /*flex-flow: column wrap;*/
+    justify-content: space-around;
+    flex-flow: column wrap;
 }
 
 body {
@@ -27,7 +29,7 @@ body {
     font-weight: 900;
     height: auto;
     /*40px;*/
-    width: 50%;
+    width: 54%;
     margin-left: 0%;
     margin-right: 0%;
     margin-bottom: 1%;
@@ -40,7 +42,7 @@ body {
 #stajlTempNowA {
     font-size: 12px;
     color: black;
-    font-weight: 700;
+    font-weight: 600;
     opacity: 1;
     display: inline-flex;
     height: auto;
@@ -82,13 +84,13 @@ body {
     font-weight: 900;
     color: red;
     opacity: 0.9;
-    /*font-variant:small-caps;*/
     height: auto;
     /*40px;*/
     margin-top: 6%;
     font-size: 30px;
     width: 50%;
     margin-left: 0%;
+    font-family: 'Verdana';
     margin-bottom: 10%;
 }
 
@@ -106,10 +108,24 @@ body {
     color: #ff7314;
     font-weight: 900;
     opacity: 0.9;
-    height: auto;
-    /*40px;*/
+    height: 20px;
     display: inline-flex;
 }
+
+#fahrId {
+    opacity: 0.3;
+    color: black;
+    font-size: 20px;
+    height: 20px;
+}
+
+#fahrId:hover {
+    opacity: 0.9;
+    color: #ff7314;
+    font-size: 20px;
+}
+
+
 
 #time1 {
     font-weight: 800;
@@ -119,6 +135,12 @@ body {
     margin-bottom: 1%;
     width: 50%;
     margin-left: 0%;
+}
+
+#huvTime {
+    color: black;
+    font-weight: 900;
+    opacity: 0;
 }
 
 
@@ -160,6 +182,16 @@ body {
 
 #redVisb {
     color: red;
+}
+
+#miId {
+    color: black;
+    opacity: 0.7;
+}
+
+#miId:hover {
+    color: red;
+    opacity: 0.9;
 }
 
 #windId {
@@ -239,4 +271,26 @@ body {
 
 .allRed {
     color: red;
+}
+
+#cellId {
+    color: black;
+    font-weight: 900;
+    width: 50%;
+}
+
+#cellInner {
+    color: red;
+    width: auto;
+}
+
+#devPoint {
+    color: black;
+    font-weight: 900;
+    width: 50%;
+}
+
+
+.tempInner {
+    color: #e56712;
 }

@@ -1,0 +1,452 @@
+
+
+/**/
+
+.weather__container {
+  margin-top: 5%;
+  border: 10px solid #cecece;
+  width: 60%;
+  background-color: #e5e5e5;
+  opacity: 0.7;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-shadow: 64px -12px 44px 60px #888888;
+  box-shadow: 64px -12px 44px 60px #888888;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-pack: distribute;
+  justify-content: flex-start;
+  -ms-flex-flow: column wrap;
+  padding-bottom: 5%;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding-top: 5%;
+  margin-bottom:10%;
+  justify-content: space-around;
+
+}
+
+body {
+  background-image: url('images/bigCloud1.jpg');
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-bottom: 20%;
+}
+
+#stajlTempNow {
+  font-size: 36px;
+  color: #ff7314;
+  font-weight: 900;
+  height: 100px;
+  width: 25%;
+  margin-left: 0%;
+  margin-right: 0%;
+  margin-bottom: 1%;
+  display: inline-flex;
+  background-color: ;
+  background-color:#c1c1c1;/* #cecece;*/
+  border: 1px solid #b7b7b7;
+}
+
+#stajlTempNowA {
+  font-size: 12px;
+  color: black;
+  font-weight: 600;
+  opacity: 1;
+  display: inline-flex;
+  height: auto;
+  /*40px;*/
+  padding-top: 1%;
+  flex-wrap: wrap;
+}
+
+#stajlC {
+  font-size: 15px;
+  height: auto;
+}
+
+#spanId1 {
+  font-family: 'Arial';
+  color: black;
+  font-size: 20px;
+  font-weight: 600;
+  height: auto;
+  /*40px;*/
+}
+
+#stajlPress {
+  font-weight: 800;
+  color: red;
+  display: inline-flex;
+  height: auto;
+  /*40px;*/
+}
+
+#pressTitl {
+  font-weight: 900;
+  color: black;
+}
+
+#titleCity {
+  font-weight: 900;
+  color: red;
+  opacity: 0.9;
+  height: auto;
+  /*40px;*/
+  margin-top: 6%;
+  font-size: 30px;
+  width: 50%;
+  margin-left: 0%;
+  font-family: 'Verdana';
+  margin-bottom: 3%;
+}
+
+#stajlClear {
+  font-weight: 800;
+  color: red;
+  height: auto;
+  width: 50%;
+  font-size:20px;
+}
+
+#celzId {
+  font-size: 20px;
+  color: #ff7314;
+  font-weight: 900;
+  opacity: 0.9;
+  height: 20px;
+  display: inline-flex;
+}
+
+#fahrId {
+  opacity: 0.3;
+  color: black;
+  font-size: 20px;
+  height: 20px;
+}
+
+#fahrId:hover {
+  opacity: 0.9;
+  color: #ff7314;
+  font-size: 20px;
+}
+
+
+
+#time1 {
+  font-weight: 800;
+  color: red;
+  height: auto;
+  /*40px;*/
+  margin-bottom: 1%;
+  width: 50%;
+  margin-left: 0%;
+}
+
+#huvTime {
+  color: black;
+  font-weight: 900;
+  /*opacity: 0;*/
+  width:50%;
+  margin-bottom:1.5%;
+}
+
+
+
+#hoverDay1 {
+  color: black;
+  font-weight: 900;
+  font-family: 'Verdana';
+}
+
+#timeId1 {
+  background-color: #cecece;
+  /*#e5e5e5;*/
+  opacity: 1;
+  padding: 1%;
+  height: auto;
+  font-weight: 900;
+  font-family: 'Arial';
+  border: 1px solid #b7b7b7;
+}
+
+
+#uvindex {
+  font-weight: 900;
+  color: black;
+  width: 50%;
+  margin-left: 0%;
+}
+
+#redUv {
+  color: red;
+}
+
+#visibleId {
+  font-weight: 900;
+  color: black;
+  width: 50%;
+  margin-left: 0%;
+}
+
+#redVisb {
+  color: red;
+}
+
+#miId {
+  color: gray;
+  opacity: 0.7;
+}
+
+#miId:hover {
+  color: red;
+  opacity: 0.9;
+}
+
+#windId {
+  font-weight: 900;
+  color: black;
+  width: 50%;
+  margin-left: 0%;
+}
+
+#redWindDir {
+  color: red;
+}
+
+#windSpid {
+  font-weight: 900;
+  color: black;
+  width: 50%;
+  margin-left: 0%;
+}
+
+.spidWind {
+  color: red;
+}
+.spidWind1 {
+color:red;
+}
+
+#windTemp {
+  color: black;
+  margin-left: 0%;
+  font-size: 12px;
+  width: auto;
+  /*margin-bottom:25%;*/
+}
+
+
+#Temp {
+  color: black;
+  margin-left: 0%;
+  font-size: 12px;
+  width: auto;
+  margin-bottom: 25%;
+}
+
+#humiditR {
+  font-weight: 900;
+  color: black;
+  width: auto;
+  margin-left: 0%;
+}
+
+#cloudCover {
+  font-weight: 900;
+  color: black;
+  width: 50%;
+  margin-left: 0%;
+}
+
+
+
+
+.dividerId {
+  font-size: 16px;
+  color: orange;
+  font-weight: 900;
+}
+
+
+
+/*#latLonId {
+  font-size: 11px;
+  color: black;
+  display: flex;
+}*/
+
+.populId {
+  color: blue;
+  font-size:11px;
+  display:flex;
+}
+
+
+.allRed {
+  color: red;
+}
+
+#cellId {
+color: black;
+  font-weight: 900;
+  width: auto;
+}
+
+#cilFitId1 {
+color:gray;
+opacity:0.9;
+}
+#cilFitId1:hover {
+color:red;
+opacity:1;
+}
+
+#cilFitId2 {
+color:gray;
+opacity:0.9;
+
+}
+#cellInner {
+  color: red;
+  width: auto;
+}
+
+#devPoint {
+  color: black;
+  font-weight: 900;
+  width: 50%;
+}
+#mikm {
+  color:gray;
+  opacity:0.9;
+}
+
+.tempInner {
+  color: #e56712;
+}
+.inBrack {
+opacity:0.7;
+color:#ff3232
+}
+
+#devId1 {
+color:gray;
+opacity:0.9;
+}
+
+#devId1:hover {
+color:red;
+opacity:1;
+}
+#toInhg{
+color:gray;
+opacity:0.9;
+}
+
+#toInhg:hover {
+color:red;
+}
+
+#deppTemp {
+color:red;
+
+}
+.minmax{
+color:black;
+font-weight:900;
+}
+.maxMinT {
+  color:#ff7314;
+  font-weight:900;
+}
+
+.maxminClick {
+color:gray;
+opacity:0.9;
+
+}
+#departId {
+color:black;
+font-weight:900;
+width:auto;
+}
+#deparToF {
+color:gray;
+opacity:0.9;
+}
+
+#deparToF:hover {
+color:red;
+}
+
+#siteName {
+width:50%;
+background-color:#e5e5e5;
+border-radius:0%;
+}
+
+#siteName1 {
+  width:50%;
+  background-color:#e5e5e5;
+  border-radius:0%;
+}
+
+#hitForm {
+  margin-top:2%;
+  width:50%;
+}
+
+#submitName {
+  width:auto;
+  background-color:#e5e5e5;
+  border-radius:0%;
+}
+
+/*
+#hitDiv3 {
+  background-color:gray;
+  width:30%;
+  height:40%;
+  display:flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+#hitDiv3>* {
+      flex: 1 1 40px;
+  }
+
+.divsi {
+  background-color:red;
+  width:20px;
+  height:20px;
+  padding:1.5%;
+  margin:1.5%;
+
+}*/
+
+#maxMinToF:hover{
+  color:#ff7314;
+}
+#minMaxToF:hover {
+  color:#ff7314;
+}
+
+#minmaxCont {
+  background-color: #c1c1c1;
+  border: 1px solid #b7b7b7;
+  height:80px;
+  width:25%;
+  padding:1%;
+}
+@media screen and (max-width: 1200px) and (min-width: 200px) {
+  .weather__container {width:auto; height:auto;margin:5%;}
+}
+
+
+

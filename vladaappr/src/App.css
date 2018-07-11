@@ -4,7 +4,7 @@
   border: 10px solid #cecece;
   width: 60%;
   background-color: #e5e5e5;
-  opacity: 0.7;
+  opacity: 0.9;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-shadow: 64px -12px 44px 60px #888888;
@@ -383,4 +383,8 @@ border-radius:0%;
   margin-top:10%;
 }
 
-
+#weatherImg {
+  width:200px;
+  opacity:1;
+  height:100px;
+}

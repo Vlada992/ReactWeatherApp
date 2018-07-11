@@ -11,7 +11,6 @@ class PanelBody extends Component {
          <input type="text" className='form-control' id='siteName1' placeholder='Type country...'/> 
          <input type='submit' className='form-control' id='submitName'/>
         </form>
-
         <div id='stajlClear'>{this.props.dataB.clearW}</div>
         <div id ='cloudCover'>Cloudiness:<span className='allRed'>&nbsp; {this.props.dataB.cloudCov}&#37;</span></div>         
         <div id='pressTitl'>Pressure:&nbsp;<div onClick={()=> this.props.Fing()} id ='stajlPress'> &nbsp;{this.props.dataB.currPress}&nbsp;<span id='unitToI'>{this.props.dataB.inhmb}</span> &nbsp; (<span className='inBrack'>{this.props.dataB.pressTend}</span>)</div></div>

@@ -3,13 +3,11 @@ import React from 'react';
 import { Component } from 'react';
 import './App.css';
 
-
-
-
 class Panel extends Component{
   render(){
     return (
       <div id='headDiv'>
+        <div><img id='weatherImg' src={`http://apidev.accuweather.com/developers/Media/Default/WeatherIcons/${this.props.data.weathIcn}-s.png`}/></div>
 
         <div id='titleCity'>{this.props.data.cityCountN}<span className='populId'>{this.props.data.latLon}&nbsp;&#8739;&nbsp;<span className='populId'>Pop:&nbsp;{this.props.data.popuL}</span> &nbsp;&nbsp;&#8739;  El:&nbsp;{this.props.data.elevaT}</span></div>
         <div id='time1'><span id='timeId1'>{this.props.data.currTime}</span></div> 

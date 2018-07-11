@@ -93,7 +93,8 @@ class App extends Component {
             inhmb:'mb',
             depCorF:'℃',
             fitorM:'m',
-            celsfahr:'℃'
+            celsfahr:'℃',
+            weathIcn:''
         }
     };
     ChangeToF(event){
@@ -273,7 +274,9 @@ class App extends Component {
         axios.get("http://dataservice.accuweather.com/currentconditions/v1/" + pickKey + "?apikey=HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG&details=true")
      .then(response => {
                 console.log("weather data:", response);
-                 let v = response.data['0'];  
+                 let v = response.data['0'];
+                 let  wicn = v.WeatherIcon.length == 1 ? 0 + v.WeatherIcon : v.WeatherIcon
+                 console.log('st  ja vreme icn:', wicn, String(wicn).length)
                 function windDirect(degree){
                     if (degree > 337.5) return 'Northerly';
                     if (degree > 292.5) return 'North Westerly';
@@ -330,6 +333,7 @@ class App extends Component {
                     minTempF:v.TemperatureSummary.Past24HourRange.Minimum.Imperial.Value,
                     maxTempFor:v.TemperatureSummary.Past24HourRange.Maximum.Metric.Value,
                     minTempFor:v.TemperatureSummary.Past24HourRange.Minimum.Metric.Value,
+                    weathIcn: String(v.WeatherIcon).length == 1 ? '0' + v.WeatherIcon : v.WeatherIcon
                 }) 
 
      })
@@ -346,7 +350,7 @@ class App extends Component {
     return(
       <div className = {['weather__container', 'container'].join(' ')}>
         <PanelBody dataB={this.state} mainF={this.callonClick} Fing={this.ChangeToInhg} Fmikm={this.KmToMi} FdewP={this.changeToF1} Fceel={this.ChangeToFT} Fdepar={this.departF}/>
-        <Panel data ={this.state} funccf ={this.ChangeToF} funcmax ={this.changeMaxToF2} funcmin={this.changeMinToF2} />
+        <Panel data ={this.state} funccf ={this.ChangeToF} funcmax ={this.changeMaxToF2} funcmin={this.changeMinToF2}/>
       </div>
     )      
   }
@@ -355,6 +359,5 @@ export default App;
 
 
 //API ketys
-
 //HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG
 //u77BxK7btrmFq5ipbObhc868Ly8wkySl

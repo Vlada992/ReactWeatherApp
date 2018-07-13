@@ -29,7 +29,7 @@ class App extends Component {
         this.fit = 'ft';
         this.m = 'm';
         this.clickArr = [];
-
+        console.log('this:', this)
         this.state = {    
             tempNowA: '',
             tempUnitA: '',
@@ -94,7 +94,8 @@ class App extends Component {
             depCorF:'℃',
             fitorM:'m',
             celsfahr:'℃',
-            weathIcn:''
+            weathIcn:'',
+            pointDew1:''
         }
     };
     ChangeToF(event){
@@ -123,12 +124,10 @@ class App extends Component {
     changeToF1(event){
        let pointDew = {...this.state.pointDew, toF:this.state.pointDewF, toFor:this.state.pointDewFor}
        let depCorF = {...this.state.depCorF, hit: this.fahr, hit1: this.cels}
-
         if (this.togleR === false) {
             this.setState({pointDew:pointDew.toF})
             this.setState({depCorF: depCorF.hit})
             this.togleR = true
-
         } else {
             this.setState({pointDew:pointDew.toFor})
             this.setState({depCorF: depCorF.hit1})
@@ -217,6 +216,7 @@ class App extends Component {
         }
     }
 
+
      callonClick(e){
      e.preventDefault();
      this.clickArr.push('clicked');
@@ -266,7 +266,8 @@ class App extends Component {
                             popuL,
                             elevaT,
                             timeZn,
-                            tmZonUrl,         
+                            tmZonUrl,
+                            keyState:`${takeKey}`         
                         })
                   return takeKey                 
      })
@@ -275,8 +276,7 @@ class App extends Component {
      .then(response => {
                 console.log("weather data:", response);
                  let v = response.data['0'];
-                 let  wicn = v.WeatherIcon.length == 1 ? 0 + v.WeatherIcon : v.WeatherIcon
-                 console.log('st  ja vreme icn:', wicn, String(wicn).length)
+
                 function windDirect(degree){
                     if (degree > 337.5) return 'Northerly';
                     if (degree > 292.5) return 'North Westerly';
@@ -305,6 +305,7 @@ class App extends Component {
                     windGust:v.WindGust.Speed.Metric.Value + v.Wind.Speed.Metric.Unit,
                     ceeling1:v.Ceiling.Metric.Value,
                     pointDew:v.DewPoint.Metric.Value,
+                    pointDew1: v.DewPoint.Metric.Value,
                     tempNowF:v.Temperature.Imperial.Value,
                     tempNowFor:v.Temperature.Metric.Value,
                     tempNowAF:v.RealFeelTemperature.Imperial.Value,
@@ -349,13 +350,14 @@ class App extends Component {
     render(){
     return(
       <div className = {['weather__container', 'container'].join(' ')}>
-        <PanelBody dataB={this.state} mainF={this.callonClick} Fing={this.ChangeToInhg} Fmikm={this.KmToMi} FdewP={this.changeToF1} Fceel={this.ChangeToFT} Fdepar={this.departF}/>
+        <PanelBody dataB={this.state} mainF={this.callonClick} Fing={this.ChangeToInhg} Fmikm={this.KmToMi} FdewP={this.changeToF1} Fceel={this.ChangeToFT} Fdepar={this.departF} />
         <Panel data ={this.state} funccf ={this.ChangeToF} funcmax ={this.changeMaxToF2} funcmin={this.changeMinToF2}/>
       </div>
     )      
   }
 };
 export default App;
+
 
 
 //API ketys

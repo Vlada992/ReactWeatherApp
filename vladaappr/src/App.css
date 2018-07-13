@@ -388,3 +388,7 @@ border-radius:0%;
   opacity:1;
   height:100px;
 }
+
+#expandCont {
+  background-color:gray;
+}

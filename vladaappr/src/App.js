@@ -3,21 +3,13 @@ import $ from 'jquery';
 import React from 'react';
 import { Component } from 'react';
 import './App.css';
-import Panel from './Panel.js';
+import PanelHead from './PanelHead.js';
 import PanelBody from './PanelBody.js'
 import axios from 'axios';
 
 class App extends Component {
     constructor(props){
         super(props);   
-        this.ChangeToF = this.ChangeToF.bind(this);
-        this.ChangeToFT = this.ChangeToFT.bind(this);
-        this.ChangeToInhg = this.ChangeToInhg.bind(this);
-        this.KmToMi = this.KmToMi.bind(this);
-        this.changeToF1 = this.changeToF1.bind(this);
-        this.changeMaxToF2 = this.changeMaxToF2.bind(this);
-        this.changeMinToF2 = this.changeMinToF2.bind(this);
-        this.departF = this.departF.bind(this);
         this.callonClick = this.callonClick.bind(this);
         this.togleR = false;
         this.cels  = '℃';
@@ -29,7 +21,6 @@ class App extends Component {
         this.fit = 'ft';
         this.m = 'm';
         this.clickArr = [];
-        console.log('this:', this)
         this.state = {    
             tempNowA: '',
             tempUnitA: '',
@@ -94,128 +85,17 @@ class App extends Component {
             depCorF:'℃',
             fitorM:'m',
             celsfahr:'℃',
-            weathIcn:'',
-            pointDew1:''
+            weathIcn:''
         }
     };
-    ChangeToF(event){
-        let tempNow = { ...this.state.tempNow, hit1: this.state.tempNowF, hit11: this.state.tempNowFor };
-        let apparTemp = { ...this.state.apparTemp, hit2: this.state.apparTempF, hit22: this.state.apparTempFor };
-        let tempNowA = { ...this.state.tempNowA, hit3: this.state.tempNowAF, hit33: this.state.tempNowAFor };
-        let windChillT = { ...this.state.windChillT, hit4: this.state.windChillTF, hit44: this.state.windChillFor };
-        let stringCels = {...this.state.stringCels, hitF: this.fahr, hitF1: this.cels};
-        if (this.togleR === false){
-            this.setState({ tempNow: tempNow.hit1 })
-            this.setState({ apparTemp: apparTemp.hit2 })
-            this.setState({ tempNowA: tempNowA.hit3 });
-            this.setState({ windChillT: windChillT.hit4 })
-            this.setState({stringCels: stringCels.hitF});
-            this.togleR = true 
-        } else {
-            this.setState({ tempNow: tempNow.hit11})
-            this.setState({ tempNowA: tempNowA.hit33 })
-            this.setState({ apparTemp: apparTemp.hit22 })
-            this.setState({ windChillT: windChillT.hit44 })
-            this.setState({stringCels: stringCels.hitF1});
-            this.togleR = false;
-        }
-    }
 
-    changeToF1(event){
-       let pointDew = {...this.state.pointDew, toF:this.state.pointDewF, toFor:this.state.pointDewFor}
-       let depCorF = {...this.state.depCorF, hit: this.fahr, hit1: this.cels}
-        if (this.togleR === false) {
-            this.setState({pointDew:pointDew.toF})
-            this.setState({depCorF: depCorF.hit})
-            this.togleR = true
-        } else {
-            this.setState({pointDew:pointDew.toFor})
-            this.setState({depCorF: depCorF.hit1})
-            this.togleR = false;
-        }
-    }
 
-     changeMaxToF2(event){
-       let maxTemp = {...this.state.maxTemp, toF:this.state.maxTempF, toFor:this.state.maxTempFor}
-       let stringCels2 = {...this.state.stringCels1, hitF: this.fahr, hitF1: this.cels};
-        if (this.togleR === false) {
-            this.setState({maxTemp:maxTemp.toF})
-            this.setState({stringCels2: stringCels2.hitF});
-            this.togleR = true
-        } else {
-            this.setState({maxTemp:maxTemp.toFor})
-            this.setState({stringCels2: stringCels2.hitF1}) 
-            this.togleR = false;
-        }
-    }
-    changeMinToF2(event){
-       let minTemp = {...this.state.minTemp, toF:this.state.minTempF, toFor:this.state.minTempFor}
-       let stringCels3 = {...this.state.stringCels2, hitF: this.fahr, hitF1: this.cels};
-        if (this.togleR === false){
-            this.setState({minTemp:minTemp.toF})
-            this.setState({stringCels3: stringCels3.hitF});
-            this.togleR = true
-        } else {
-            this.setState({minTemp:minTemp.toFor})
-            this.setState({stringCels3: stringCels3.hitF});
-            this.togleR = false;
-        }
-    }
-
-    ChangeToFT(event){
-       let ceeling1 = {...this.state.ceeling1, toFT:this.state.ceelFit, toForFT:this.state.ceelFitFor}
-       let fitorM = {...this.state.fitorM, hit: this.fit, hit1: this.m}
-        if (this.togleR === false){
-            this.setState({ceeling1:ceeling1.toFT})
-            this.setState({fitorM: fitorM.hit})
-            this.togleR = true
-        }else {
-            this.setState({ceeling1:ceeling1.toForFT})
-            this.setState({fitorM: fitorM.hit1})
-            this.togleR = false;
-        }
-    }
-
-    ChangeToInhg(event){
-       let currPress = {...this.state.currPress, toIng:this.state.pressInhg, toIngFor:this.state.pressInhgFor}
-       let inhmb  = {...this.state.inhnm, hit:this.mlbr, hit1: this.inhg}
-        if (this.togleR === false){
-            this.setState({currPress:currPress.toIng})
-            this.setState({inhmb:inhmb.hit1})
-            this.togleR = true
-        }else {
-            this.setState({currPress:currPress.toIngFor})
-            this.togleR = false;
-            this.setState({inhmb:inhmb.hit})
-        }
-    }
-    KmToMi(event){
-        let visible = { ...this.state.visible, to1: this.state.visibleMi, to2: this.state.visibleFor }
-        let kmmi =  {...this.state.kmmi, hit1:this.mi, hit2:this.km}
-        if(this.togleR === false){
-            this.setState({visible: visible.to1})
-            this.togleR = true
-            this.setState({kmmi:kmmi.hit1})
-        } else {
-            this.setState({ visible: visible.to2 })
-            this.togleR = false;
-            this.setState({kmmi:kmmi.hit2})
-        }
-    }
-    departF(event){
-       let departTemp = {...this.state.departTemp, toDepF:this.state.departTempF, toDepFor:this.state.departFor};
-       let celsfahr ={...this.state.celsfahr, hit:this.fahr, hit1: this.cels};
-        if (this.togleR === false){
-            this.setState({departTemp: departTemp.toDepF})
-            this.setState({celsfahr:celsfahr.hit})
-            this.togleR = true
-        } else {
-            this.setState({departTemp:departTemp.toDepFor})
-            this.setState({celsfahr:celsfahr.hit1})
-            this.togleR = false;
-        }
-    }
-
+    /*
+     loadF(){
+        localStorage.setItem('tempNowA', JSON.stringify(this.state.tempNowA) )
+        let takeA = localStorage.getItem('tempNowA');
+        this.setState({tempNowA: JSON.parse(takeA)})
+        }*/
 
      callonClick(e){
      e.preventDefault();
@@ -237,10 +117,10 @@ class App extends Component {
         var offsets = timeResp.data.dstOffset * 1000 + timeResp.data.rawOffset * 1000
         var localdate = new Date(timestamp * 1000 + offsets)
         var refreshDate = new Date() 
-        var millisecondselapsed = refreshDate - targetDate // get amount of time elapsed between targetDate and now
+        var millisecondselapsed = refreshDate - targetDate
         localdate.setMilliseconds(localdate.getMilliseconds()+ millisecondselapsed)
         var toLocStr = localdate.toLocaleString();
-        var myInt = null;
+        var myInt;
         setInterval(()=>{
         myInt =  localdate.setSeconds(localdate.getSeconds()+1)
                     this.setState({
@@ -276,7 +156,6 @@ class App extends Component {
      .then(response => {
                 console.log("weather data:", response);
                  let v = response.data['0'];
-
                 function windDirect(degree){
                     if (degree > 337.5) return 'Northerly';
                     if (degree > 292.5) return 'North Westerly';
@@ -288,6 +167,7 @@ class App extends Component {
                     if (degree > 22.5) { return 'North Easterly';}
                     return 'Northerly';
                 }
+
                 this.setState({  
                     tempNowA:v.RealFeelTemperature.Metric.Value, 
                     tempNow:v.Temperature.Metric.Value,
@@ -337,6 +217,7 @@ class App extends Component {
                     weathIcn: String(v.WeatherIcon).length == 1 ? '0' + v.WeatherIcon : v.WeatherIcon
                 }) 
 
+
      })
         return pickKey;
     })
@@ -350,8 +231,8 @@ class App extends Component {
     render(){
     return(
       <div className = {['weather__container', 'container'].join(' ')}>
-        <PanelBody dataB={this.state} mainF={this.callonClick} Fing={this.ChangeToInhg} Fmikm={this.KmToMi} FdewP={this.changeToF1} Fceel={this.ChangeToFT} Fdepar={this.departF} />
-        <Panel data ={this.state} funccf ={this.ChangeToF} funcmax ={this.changeMaxToF2} funcmin={this.changeMinToF2}/>
+        <PanelBody dataB={this.state} mainF={this.callonClick}/>
+        <PanelHead data ={this.state} funccf ={this.ChangeToF}/>
       </div>
     )      
   }
@@ -360,6 +241,6 @@ export default App;
 
 
 
-//API ketys
+//API keys
 //HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG
 //u77BxK7btrmFq5ipbObhc868Ly8wkySl

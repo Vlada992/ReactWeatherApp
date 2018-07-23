@@ -59,11 +59,6 @@ body {
   flex-wrap: wrap;
 }
 
-#stajlC {
-  font-size: 15px;
-  height: auto;
-}
-
 #spanId1 {
   font-family: 'Arial';
   color: black;
@@ -116,20 +111,6 @@ body {
   color:red;
 }
 
-#fahrId {
-  opacity: 0.3;
-  color: black;
-  font-size: 20px;
-  height: 20px;
-}
-
-#fahrId:hover {
-  opacity: 0.9;
-  color: #ff7314;
-  font-size: 20px;
-}
-
-
 
 #time1 {
   font-weight: 800;
@@ -137,20 +118,6 @@ body {
   height: auto;
   margin-bottom: 1%;
   margin-left: 0%;
-}
-
-#huvTime {
-  color: black;
-  font-weight: 900;
-  margin-bottom:1.5%;
-}
-
-
-
-#hoverDay1 {
-  color: black;
-  font-weight: 900;
-  font-family: 'Verdana';
 }
 
 #timeId1 {
@@ -244,8 +211,6 @@ color:red;
 }
 
 
-
-
 .dividerId {
   font-size: 16px;
   color: orange;
@@ -284,10 +249,6 @@ color: black;
   color: black;
   font-weight: 900;
 }
-#mikm {
-  color:gray;
-  opacity:0.9;
-}
 
 .tempInner {
   color: #e56712;
@@ -300,7 +261,6 @@ color:#ff3232
 #CtoF:hover{
   color:#e56712;
 }
-
 
 #deppTemp {
 color:red;
@@ -319,22 +279,11 @@ font-weight:900;
   color:red;
 }
 
-
 #departId {
 color:black;
 font-weight:900;
 width:auto;
 }
-
-#deparToF {
-color:gray;
-opacity:0.9;
-}
-
-#deparToF:hover {
-color:red;
-}
-
 
 #departCf:hover {
   color:#e56712;
@@ -392,3 +341,10 @@ border-radius:0%;
 #expandCont {
   background-color:gray;
 }
+.hideDiv {
+  display:none;
+}
+.showDiv{
+  display:inline-block;
+}
+

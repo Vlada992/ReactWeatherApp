@@ -32,7 +32,6 @@ class App extends Component {
             currTime: '',
             currDay: '',
             currMont: '',
-            uvInd: '',
             visible: '',
             windWay: '',
             windSpd: '',
@@ -61,7 +60,6 @@ class App extends Component {
             currTime1: '',
             tmZonUrl: '',
             pressTend: '',
-            uvText: '',
             pointDewF:'',
             pointDewFor:'',
             ceelFit:'',
@@ -85,17 +83,22 @@ class App extends Component {
             depCorF:'℃',
             fitorM:'m',
             celsfahr:'℃',
-            weathIcn:''
+            weathIcn:'',
+            stlState:'hideCls',
+            airPln:'',
+            onlyTime:'',
+            ampmPart:''
         }
     };
 
-
-    /*
-     loadF(){
-        localStorage.setItem('tempNowA', JSON.stringify(this.state.tempNowA) )
-        let takeA = localStorage.getItem('tempNowA');
-        this.setState({tempNowA: JSON.parse(takeA)})
-        }*/
+    componentDidMount(){
+        if(localStorage.getItem('gradovi') != undefined){
+            window.onload = (e)=>{
+            this.callonClick(e)
+        }
+        }
+    }
+    
 
      callonClick(e){
      e.preventDefault();
@@ -104,11 +107,21 @@ class App extends Component {
      let holdCountry = document.getElementById('siteName1').value
      localStorage.setItem('gradovi', holdGrad)
      localStorage.setItem('drzava', holdCountry)
-     axios.get("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG&q="+String(localStorage.getItem('gradovi'))+"%20"+String(localStorage.getItem('drzava'))+"&details=true&offset=7")
-     .then(locInfo =>{
+    if(localStorage.getItem('gradovi')){
+        localStorage.removeItem('gradovi1')
+        localStorage.setItem('gradovi1', holdGrad)
+    }else {
+        localStorage.setItem('gradovi1','Belgrade')
+
+    }
+
+     axios.get("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG&q="+String(localStorage.getItem('gradovi1')) +"%20"+String(localStorage.getItem('drzava'))+"&details=true&offset=7")
+     .then(locInfo =>{ 
+        this.setState({stlState:'showCls'})
+    
         var lat   = locInfo.data["0"].GeoPosition.Latitude;
         var long  = locInfo.data["0"].GeoPosition.Longitude;
-        var targetDate = new Date()
+        var targetDate = new Date();
         var timestamp = targetDate.getTime()/1000 + targetDate.getTimezoneOffset() * 60;
         var apikey = 'AIzaSyDQYoYpB-CyL4Leg5IWW1pT0afaVD9z4J0';
         var apicall = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + lat + "," + long + '&timestamp=' + timestamp + '&key=' + apikey
@@ -123,18 +136,18 @@ class App extends Component {
         var myInt;
         setInterval(()=>{
         myInt =  localdate.setSeconds(localdate.getSeconds()+1)
-                    this.setState({
-                        currTime:localdate.toLocaleString(),
+/                    this.setState({
+                        currTime:localdate.toLocaleString().slice(0, 10),
+                        onlyTime:localdate.toLocaleString().slice(10, localdate.toLocaleString().length - 2),
+                        ampmPart:localdate.toLocaleString().slice(localdate.toLocaleString().length - 2),
                         currTime1:toLocStr.slice(11),
                         currDay: String(localdate).slice(0,4),
                         currMont: String(localStorage.getItem('myMonths')).split(',')[new Date().getMonth()]
                     })
-                }, 1000)
-            if(this.clickArr.length > 1){
-            }
+                }, 1000) 
         })
                         let cityCountN = locInfo.data["0"].EnglishName + `, ` + locInfo.data["0"].Country.EnglishName;
-                        let latLon = locInfo.data["0"].GeoPosition.Latitude + ` / ` + locInfo.data["0"].GeoPosition.Longitude;
+                        let latLon = locInfo.data["0"].GeoPosition.Latitude + `/` + locInfo.data["0"].GeoPosition.Longitude;
                         let elevaT = locInfo.data["0"].GeoPosition.Elevation.Metric.Value + locInfo.data["0"].GeoPosition.Elevation.Metric.Unit;
                         let popuL = locInfo.data["0"].Details.Population;
                         let timeZn = locInfo.data["0"].TimeZone.Code;
@@ -174,7 +187,6 @@ class App extends Component {
                     wetIcn:v.WeatherIcon,
                     currPress:v.Pressure.Metric.Value,
                     clearW:v.WeatherText,
-                    uvInd:v.UVIndex,
                     visible:v.Visibility.Metric.Value + v.Visibility.Metric.Unit,
                     windWay:windDirect(v.Wind.Direction.Degrees),
                     windSpd:v.Wind.Speed.Metric.Value + v.Wind.Speed.Metric.Unit,
@@ -197,7 +209,6 @@ class App extends Component {
                     visibleMi:v.Visibility.Imperial.Value + v.Visibility.Imperial.Unit,
                     visibleFor:v.Visibility.Metric.Value + v.Visibility.Metric.Unit,
                     pressTend:v.PressureTendency.LocalizedText,
-                    UvText: v.UVIndexText,
                     pointDewF:v.DewPoint.Imperial.Value,
                     pointDewFor:v.DewPoint.Metric.Value,
                     ceelFit:v.Ceiling.Imperial.Value,
@@ -223,8 +234,31 @@ class App extends Component {
     })
     .then((passKeyHere)=>{
         axios.get("http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + passKeyHere + "?apikey=HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG&details=true&metric=true")
-        .then(response5Days => {
-        console.log('5days res:', response5Days);
+        .then(resp5Days => {
+        console.log('5days res:', resp5Days);
+        let allData = resp5Days.data.DailyForecasts[1].AirAndPollen
+        this.setState({
+         airPlnN : allData[0].Name,
+         airPlnVT: allData[0].Value,
+         airPlnC: allData[0].Category,
+         airPlnT: allData[0].Type,
+         grassPlnN: allData[1].Name,
+         grassPlnV: allData[1].Value,
+         grassPlnC:allData[1].Category,
+         moldN:allData[2].Name,
+         moldV:allData[2].Value,
+         moldC:allData[2].Category,
+         weedN:allData[3].Name,
+         weedV:allData[3].Value,
+         weedC:allData[3].Category,
+         treeN:allData[4].Name,
+         treeV:allData[4].Value,
+         treeC:allData[4].Category,
+         uvN:allData[5].Name,
+         uvV:allData[5].Value,
+         uvC:allData[5].Category
+        })
+        
     }) 
     })//then
     };
@@ -238,7 +272,6 @@ class App extends Component {
   }
 };
 export default App;
-
 
 
 //API keys

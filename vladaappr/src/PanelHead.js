@@ -120,10 +120,10 @@ class PanelHead extends Component{
 
   render(){
     return (
-      <div id='headDiv'>
-        <div><img id='weatherImg' src={`http://apidev.accuweather.com/developers/Media/Default/WeatherIcons/${this.props.data.weathIcn}-s.png`}/></div>
-        <div id='titleCity'>{this.props.data.cityCountN}<span className='populId'>{this.props.data.latLon}&nbsp;&#8739;&nbsp;<span className='populId'>Pop:&nbsp;{this.props.data.popuL}</span> &nbsp;&nbsp;&#8739;  El:&nbsp;{this.props.data.elevaT}</span></div>
-        <div id='time1'><span id='timeId1'>{this.props.data.currTime}</span></div> 
+      <div className={this.props.data.stlState} id='headDiv'>
+        <div> <img id='weatherImg' src={`http://apidev.accuweather.com/developers/Media/Default/WeatherIcons/${this.props.data.weathIcn == 0 ? '0' + 1 : this.props.data.weathIcn}-s.png`}/></div>
+        <div id='titleCity'>{this.props.data.cityCountN}<span className='populId'><span className='hdclr'>ll:</span>&nbsp;  {this.props.data.latLon}&nbsp;&#8739;&nbsp;<span className='populId'><span className='hdclr'>pop:</span>&nbsp;{this.props.data.popuL}</span> &nbsp;&nbsp;&#8739;  &nbsp;<span className='hdclr'>el</span>:&nbsp;{this.props.data.elevaT}</span></div>
+        <div id='time1'><span id='timeId1'>{this.props.data.currTime} &nbsp;<span id='timerGreen'>{this.props.data.onlyTime}</span>&nbsp;  {this.props.data.ampmPart}</span></div> 
         <div id='stajlTempNow' className='container'><span className={this.state.showDiv7}>{this.props.data.tempNow}</span> <span className={this.state.hideDiv7}>{this.state.tempNow}</span>    <div onClick={(e) => this.ChangeToF()} id='celzId'>{this.state.stringCels}</div>&nbsp;
         <div id='stajlTempNowA' className='container'><div className='spanId1'>(Feels like: &nbsp;</div><span className='tempInner'> <span className={this.state.showDiv7}>{this.props.data.tempNowA}</span> <span className={this.state.hideDiv7}>{this.state.tempNowA}</span>     <span>{this.state.stringCels}</span></span>)
         <div id ='windTemp'>(Wind chill: <span className='tempInner'><span className={this.state.showDiv7}>{this.props.data.windChillT}</span> <span className={this.state.hideDiv7}>{this.state.windChillT}</span><span>{this.state.stringCels}</span></span>)</div>
@@ -131,8 +131,8 @@ class PanelHead extends Component{
       </div>
       </div>
       <div id='minmaxCont'>
-       <div className='minmax'>Max  (past 24h):&nbsp;<span onClick={(e) => this.changeMaxToF2() } className ='maxMinT'><span className={this.state.showDiv5}>{this.props.data.maxTemp}</span> <span className={this.state.hideDiv5}>{this.state.maxTemp}</span> <span /*onClick={(e) => this.changeMaxToF2() }*/ id='maxminToC'>{this.state.stringCels2}</span></span></div>
-       <div className='minmax'>Min  &nbsp;(past 24h):&nbsp;<span className ='maxMinT'> <span className={this.state.showDiv6}>{this.props.data.minTemp}</span>  <span className={this.state.hideDiv6}>{this.state.minTemp}</span>   <span onClick={(e) => this.changeMinToF2() } id='minmaxToC'>{this.state.stringCels3}</span></span></div>
+       <div className='minmax'>Max  (past 24h):&nbsp;&nbsp;<span onClick={(e) => this.changeMaxToF2() } className ='maxMinT'><span className={this.state.showDiv5}>{this.props.data.maxTemp}</span> <span className={this.state.hideDiv5}>{this.state.maxTemp}</span> <span  id='maxminToC'>{this.state.stringCels2}</span></span></div>
+       <div className='minmax'>Min  &nbsp;(past 24h):&nbsp;<span className ='maxMinT'> <span className={this.state.showDiv6}>{this.props.data.minTemp}</span>  <span className={this.state.hideDiv6}>{this.state.minTemp}</span><span onClick={(e) => this.changeMinToF2() } id='minmaxToC'>{this.state.stringCels3}</span></span></div>
       </div>
       </div>
     )

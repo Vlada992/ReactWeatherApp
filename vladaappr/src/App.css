@@ -97,6 +97,7 @@ body {
   height: auto;
   font-size:20px;
   margin-top:15%;
+  margin-bottom:3%;
 }
 
 #celzId {
@@ -254,8 +255,8 @@ color: black;
   color: #e56712;
 }
 .inBrack {
-opacity:0.7;
-color:#ff3232
+opacity:0.8;
+color:#ff7314;
 }
 
 #CtoF:hover{
@@ -338,8 +339,11 @@ border-radius:0%;
   height:100px;
 }
 
-#expandCont {
-  background-color:gray;
+.expandCont {
+ background-color:#c1c1c1;
+ font-weight:900;
+ color:red;
+ padding:1%;
 }
 .hideDiv {
   display:none;
@@ -348,3 +352,49 @@ border-radius:0%;
   display:inline-block;
 }
 
+.hideCls {
+  display:none;
+}
+
+.showCls {
+  display:block;
+}
+
+
+.hdclr {
+  color:black;
+  font-weight:800;
+}
+
+#moreid {
+  margin-top:3%;
+  color:gray;
+  font-size:25px;
+  font-weight:900; 
+  font-family:'Verdana';
+}
+
+#moreid:hover {
+  color: black;
+}
+
+
+.airCls {
+  color:black;
+  font-weight:900;
+  /*background-color:#c1c1c1;*/
+
+}
+
+
+.catOrn {
+  color:#ff7314;
+  font-weight:900;
+  opacity:0.8;
+
+}
+
+#timerGreen {
+  color:green;
+
+}

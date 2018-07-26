@@ -30,6 +30,8 @@ class PanelBody extends Component {
     this.m = 'm';
     this.hide = 'hideDiv'
     this.show = 'showDiv'
+    this.move = 'hideCls'
+    this.add = 'showCls'
     this.state = {
       pointDew:'',
       depCorF:'℃',
@@ -59,6 +61,9 @@ class PanelBody extends Component {
       fitorM:'m',
       ceelFit:'',
       cellFitFor:'',
+      expState:'hideCls',
+      expState1:'showCls'
+
     }
 };
 
@@ -164,11 +169,16 @@ ChangeToFT(event){
 
 
 expandF(event){
+  let expState = {...this.state.expState, hit1:this.add, hit2:this.move}
+  let expState1 = {...this.state.expState1, hit1:this.move, hit2:this.add}
   if (this.togleR7 === false){
-      console.log('vlajko');
+      this.setState({expState:expState.hit1})
+      this.setState({expState1:expState1.hit1})
+
       this.togleR7 = true
   } else{
-      console.log('nemanja');
+      this.setState({expState1:expState1.hit2})
+      this.setState({expState:expState.hit2})
       this.togleR7 = false;
   }
 }
@@ -180,11 +190,12 @@ expandF(event){
         <input type="text" className='form-control' id='siteName' placeholder='Type city...'/> 
          <input type="text" className='form-control' id='siteName1' placeholder='Type country...'/> 
          <input type='submit' className='form-control' id='submitName'/>
-        </form>     
+        </form> 
+        <div className={this.props.dataB.stlState}>
+
         <div id='stajlClear'>{this.props.dataB.clearW}</div>
         <div id ='cloudCover'>Cloudiness:<span className='allRed'>&nbsp; {this.props.dataB.cloudCov}&#37;</span></div>            
         <div id='pressTitl'>Pressure:&nbsp;<div onClick={()=> this.ChangeToInhg()} id ='stajlPress'> &nbsp;<span className={this.state.showDiv3}>{this.props.dataB.currPress}</span> &nbsp;<span className={this.state.hideDiv3}>{this.state.currPress}</span>&nbsp;   <span id='unitToI'>{this.state.inhmb}</span> &nbsp; (<span className='inBrack'>{this.props.dataB.pressTend}</span>)</div></div>       
-        <div id='uvindex'>UV index: <span id='redUv'>{this.props.dataB.uvInd}&nbsp;(<span className='inBrack'>{this.props.dataB.UvText}</span>)</span></div>    
         <div id ='visibleId'>Visibility:&nbsp;<span onClick={()=> this.KmToMi() } id='redVisb'><span className={this.state.showDiv2}>{this.props.dataB.visible}</span> <span className={this.state.hideDiv2}>{this.state.visible}</span>    </span></div>       
         <div id ='windId'>Wind direction:&nbsp; <span id='redWindDir'>{this.props.dataB.windWay}</span></div>
         <div id ='windSpid'>Wind speed: <span className='dividerId'>&#8739;</span>&nbsp;gust: &nbsp; <span className='spidWind'>{this.props.dataB.windSpd}</span>&nbsp; <span className='spidWind'> <span className='dividerId'>&#8739;</span>&nbsp;     {this.props.dataB.windGust}</span></div>         
@@ -192,9 +203,21 @@ expandF(event){
         <div id ='humiditR'>Relative humidity:&nbsp;<span className='spidWind'>{this.props.dataB.relHumid}&#37;</span></div>
         <div id='cellId'>Ceeling: &nbsp; <span id='cellInner1'><span className={this.state.showDiv4}>{this.props.dataB.ceeling1}</span> <span className={this.state.hideDiv4}>{this.state.ceeling1}</span> <span  onClick={()=> this.ChangeToFT() } id='cellInner'>{this.state.fitorM}</span></span></div>
         <div id='departId'>24h temp departure:&nbsp;<span id='deppTemp'> <span className={this.state.showDiv}> {this.props.dataB.departTemp}</span>  <span className={this.state.hideDiv}> {this.state.departTemp} </span> <span onClick={()=> this.departF()} id='departCf'>{this.state.celsfahr}</span></span></div>
-        <div onClick={()=> this.expandF()} id='expandDiv'>More...</div>
-        <div id='expandCont'></div>
+       
+        <div className={this.state.expState1} onClick={()=> this.expandF()} id='expandDiv'><span id='moreid'>More info <i className="fa fa-angle-double-down"></i></span>  </div>
         
+        <div className={[this.state.expState, 'expandCont'].join(' ')}><span className='airCls'>{this.props.dataB.airPlnN}&nbsp;({this.props.dataB.airPlnT}): &nbsp;</span>  {this.props.dataB.airPlnVT}&nbsp;(<span className='catOrn'>{this.props.dataB.airPlnC}</span>)</div>
+        <div className={[this.state.expState, 'expandCont'].join(' ')}><span className='airCls'>{this.props.dataB.grassPlnN}:&nbsp;</span> {this.props.dataB.grassPlnV} &#13221; &nbsp;(<span className='catOrn'>{this.props.dataB.grassPlnC}</span>)</div>
+        <div className={[this.state.expState, 'expandCont'].join(' ')}><span className='airCls'>{this.props.dataB.moldN}:&nbsp;</span> {this.props.dataB.moldV} &#13221; &nbsp;(<span className='catOrn'>{this.props.dataB.moldC}</span>)</div>
+        <div className={[this.state.expState, 'expandCont'].join(' ')}><span className='airCls'>{this.props.dataB.weedN}:&nbsp;</span> {this.props.dataB.weedV} &#13221; &nbsp;(<span className='catOrn'>{this.props.dataB.weedC}</span>)</div>
+        <div className={[this.state.expState, 'expandCont'].join(' ')}><span className='airCls'>{this.props.dataB.treeN}:&nbsp;</span> {this.props.dataB.treeV} &#13221; &nbsp;(<span className='catOrn'>{this.props.dataB.treeC}</span>)</div>
+        <div className={[this.state.expState, 'expandCont'].join(' ')}><span className='airCls'>{this.props.dataB.uvN}:&nbsp;</span> {this.props.dataB.uvV} &nbsp;(<span className='catOrn'>{this.props.dataB.uvC}</span>)</div>
+
+
+
+        <div className={this.state.expState} onClick={()=> this.expandF()} id='expandDiv'><span id='moreid'>Less info <i className="fa fa-angle-double-up"></i></span></div>
+
+        </div>
         </div>
     )
   }

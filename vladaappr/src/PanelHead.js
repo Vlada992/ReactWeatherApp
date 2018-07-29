@@ -2,7 +2,6 @@
 import React from 'react';
 import { Component } from 'react';
 import './App.css';
-import axios from 'axios';
 
 
 
@@ -37,7 +36,6 @@ class PanelHead extends Component{
       stringCels3:'℃',
       tempNow:'',
       apparTemp:'',
-      tempNowA:'',
       windChillT:'',
       stringCels:'℃',
       tempNowF:'',
@@ -121,13 +119,14 @@ class PanelHead extends Component{
   render(){
     return (
       <div className={this.props.data.stlState} id='headDiv'>
-        <div> <img id='weatherImg' src={`http://apidev.accuweather.com/developers/Media/Default/WeatherIcons/${this.props.data.weathIcn == 0 ? '0' + 1 : this.props.data.weathIcn}-s.png`}/></div>
+        <div><img id='weatherImg' alt='accuweather.com' src={`http://apidev.accuweather.com/developers/Media/Default/WeatherIcons/${this.props.data.weathIcn == 0 ? '0' + 1 : this.props.data.weathIcn}-s.png`}/></div>
         <div id='titleCity'>{this.props.data.cityCountN}<span className='populId'><span className='hdclr'>ll:</span>&nbsp;  {this.props.data.latLon}&nbsp;&#8739;&nbsp;<span className='populId'><span className='hdclr'>pop:</span>&nbsp;{this.props.data.popuL}</span> &nbsp;&nbsp;&#8739;  &nbsp;<span className='hdclr'>el</span>:&nbsp;{this.props.data.elevaT}</span></div>
         <div id='time1'><span id='timeId1'>{this.props.data.currTime} &nbsp;<span id='timerGreen'>{this.props.data.onlyTime}</span>&nbsp;  {this.props.data.ampmPart}</span></div> 
         <div id='stajlTempNow' className='container'><span className={this.state.showDiv7}>{this.props.data.tempNow}</span> <span className={this.state.hideDiv7}>{this.state.tempNow}</span>    <div onClick={(e) => this.ChangeToF()} id='celzId'>{this.state.stringCels}</div>&nbsp;
         <div id='stajlTempNowA' className='container'><div className='spanId1'>(Feels like: &nbsp;</div><span className='tempInner'> <span className={this.state.showDiv7}>{this.props.data.tempNowA}</span> <span className={this.state.hideDiv7}>{this.state.tempNowA}</span>     <span>{this.state.stringCels}</span></span>)
         <div id ='windTemp'>(Wind chill: <span className='tempInner'><span className={this.state.showDiv7}>{this.props.data.windChillT}</span> <span className={this.state.hideDiv7}>{this.state.windChillT}</span><span>{this.state.stringCels}</span></span>)</div>
         <div id ='apparTempId'>(Apparent:&nbsp;<span className='tempInner'><span className={this.state.showDiv7}>{this.props.data.apparTemp}</span>  <span className={this.state.hideDiv7}>{this.state.apparTemp}</span>     <span>{this.state.stringCels}</span></span>)</div>
+
       </div>
       </div>
       <div id='minmaxCont'>

@@ -21,6 +21,7 @@ class App extends Component {
         this.fit = 'ft';
         this.m = 'm';
         this.clickArr = [];
+        this.gradArr=[];
         this.state = {    
             tempNowA: '',
             tempUnitA: '',
@@ -87,13 +88,15 @@ class App extends Component {
             stlState:'hideCls',
             airPln:'',
             onlyTime:'',
-            ampmPart:''
+            ampmPart:'',
+            imgMoon:'images/moon1.png'
+
         }
     };
 
     componentDidMount(){
-        if(localStorage.getItem('gradovi') != undefined){
-            window.onload = (e)=>{
+        if(localStorage.getItem('gradovi') !== undefined){
+            window.onload = (e)=> {
             this.callonClick(e)
         }
         }
@@ -102,21 +105,27 @@ class App extends Component {
 
      callonClick(e){
      e.preventDefault();
+     console.log($)
      this.clickArr.push('clicked');
      let holdGrad =  document.getElementById('siteName').value
+     this.gradArr.push(holdGrad);
      let holdCountry = document.getElementById('siteName1').value
-     localStorage.setItem('gradovi', holdGrad)
+     localStorage.setItem('gradovi', holdGrad) 
      localStorage.setItem('drzava', holdCountry)
-    if(localStorage.getItem('gradovi')){
+     localStorage.setItem('gradovi2', this.gradArr[this.gradArr.length -1]   )
+     console.log('bulian:', Boolean(localStorage.getItem('gradovi2')),'value', localStorage.getItem('gradovi'))
+
+    if(localStorage.getItem('gradovi') || localStorage.getItem('gradovi2')){
         localStorage.removeItem('gradovi1')
         localStorage.setItem('gradovi1', holdGrad)
     }else {
         localStorage.setItem('gradovi1','Belgrade')
-
+        localStorage.setItem('gradovi', this.gradArr[this.gradArr.length -1])
     }
 
-     axios.get("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG&q="+String(localStorage.getItem('gradovi1')) +"%20"+String(localStorage.getItem('drzava'))+"&details=true&offset=7")
+     axios.get("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=u77BxK7btrmFq5ipbObhc868Ly8wkySl&q="+String(localStorage.getItem('gradovi1')) +"%20"+String(localStorage.getItem('drzava'))+"&details=true&offset=7")
      .then(locInfo =>{ 
+         console.log(locInfo)
         this.setState({stlState:'showCls'})
     
         var lat   = locInfo.data["0"].GeoPosition.Latitude;
@@ -133,10 +142,10 @@ class App extends Component {
         var millisecondselapsed = refreshDate - targetDate
         localdate.setMilliseconds(localdate.getMilliseconds()+ millisecondselapsed)
         var toLocStr = localdate.toLocaleString();
-        var myInt;
+        //var myInt;
         setInterval(()=>{
-        myInt =  localdate.setSeconds(localdate.getSeconds()+1)
-/                    this.setState({
+       /*let myInt =*/localdate.setSeconds(localdate.getSeconds()+1)
+                    this.setState({
                         currTime:localdate.toLocaleString().slice(0, 10),
                         onlyTime:localdate.toLocaleString().slice(10, localdate.toLocaleString().length - 2),
                         ampmPart:localdate.toLocaleString().slice(localdate.toLocaleString().length - 2),
@@ -165,7 +174,7 @@ class App extends Component {
                   return takeKey                 
      })
      .then((pickKey)=>{
-        axios.get("http://dataservice.accuweather.com/currentconditions/v1/" + pickKey + "?apikey=HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG&details=true")
+        axios.get("http://dataservice.accuweather.com/currentconditions/v1/" + pickKey + "?apikey=u77BxK7btrmFq5ipbObhc868Ly8wkySl&details=true")
      .then(response => {
                 console.log("weather data:", response);
                  let v = response.data['0'];
@@ -225,7 +234,8 @@ class App extends Component {
                     minTempF:v.TemperatureSummary.Past24HourRange.Minimum.Imperial.Value,
                     maxTempFor:v.TemperatureSummary.Past24HourRange.Maximum.Metric.Value,
                     minTempFor:v.TemperatureSummary.Past24HourRange.Minimum.Metric.Value,
-                    weathIcn: String(v.WeatherIcon).length == 1 ? '0' + v.WeatherIcon : v.WeatherIcon
+                    weathIcn: String(v.WeatherIcon).length === 1 ? '0' + v.WeatherIcon : v.WeatherIcon
+
                 }) 
 
 
@@ -233,10 +243,11 @@ class App extends Component {
         return pickKey;
     })
     .then((passKeyHere)=>{
-        axios.get("http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + passKeyHere + "?apikey=HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG&details=true&metric=true")
+        axios.get("http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + passKeyHere + "?apikey=u77BxK7btrmFq5ipbObhc868Ly8wkySl&details=true&metric=true")
         .then(resp5Days => {
         console.log('5days res:', resp5Days);
-        let allData = resp5Days.data.DailyForecasts[1].AirAndPollen
+        let allD  =  resp5Days.data.DailyForecasts[0];
+        let allData = resp5Days.data.DailyForecasts[0].AirAndPollen
         this.setState({
          airPlnN : allData[0].Name,
          airPlnVT: allData[0].Value,
@@ -256,10 +267,34 @@ class App extends Component {
          treeC:allData[4].Category,
          uvN:allData[5].Name,
          uvV:allData[5].Value,
-         uvC:allData[5].Category
+         uvC:allData[5].Category,
+         percitipH: allD.HoursOfSun + `h` + `/` +  allD.Day.HoursOfRain + `h` + `/` + String(allD.Day.HoursOfIce) + `h` + `/` + String(allD.Day.HoursOfSnow) + `h`  ,
+         percitProb: allD.Day.RainProbability + '%' + ' / ' + String(allD.Day.SnowProbability) + '%' + ' / ' + String(allD.Day.IceProbability) + '%',
+         percitVal:  allD.Day.Rain.Value +  allD.Day.Rain.Unit + ' / ' + allD.Day.Snow.Value +  allD.Day.Snow.Unit + ' / ' + allD.Day.Ice.Value + allD.Day.Ice.Unit,
+         thunderProb: allD.Day.ThunderstormProbability + "%",
+         phraseW: allD.Day.ShortPhrase,
+         phraseTitl:allD.Day.LongPhrase,
+         weathIcn1: String( allD.Day.Icon).length === 1 ? '0' +  allD.Day.Icon :  allD.Day.Icon,
+         sunRise:  String(new Date(allD.Sun.Rise)),
+         sunSet: String(new Date(allD.Sun.Set)),
+         moonRise:  String(new Date(allD.Moon.Rise)),
+         moonSet: String(new Date(allD.Moon.Set)),
+         moonAge: allD.Moon.Age,
+         moonPhase:allD.Moon.Phase,
+         regDate: 'Weather info for daylight for: ' + allD.Date.apparTempF,
+         nightCloud: allD.Night.CloudCover + "%",  //NIGHT START
+         nightPerc:  allD.Night.HoursOfRain + "h" + '/' + String(allD.Night.HoursOfIce) + "h" +'/' + String(allD.Night.HoursOfSnow) + "h"  ,
+         nightProb: allD.Night.RainProbability + '%' + ' / ' + String(allD.Night.SnowProbability) + '%' + ' / ' + String(allD.Night.IceProbability) + '%',
+         nightVal:  allD.Night.Rain.Value +  allD.Night.Rain.Unit + ' / ' + allD.Night.Snow.Value +  allD.Night.Snow.Unit + ' / ' + allD.Night.Ice.Value + allD.Night.Ice.Unit,
+         nightTund: allD.Night.ThunderstormProbability + "%",
+         nightPhrase: allD.Night.ShortPhrase,
+         nightIcn1: String( allD.Night.Icon).length === 1 ? '0' +  allD.Night.Icon :  allD.Night.Icon,
+         nightDate: 'Weather info for night for: ' + new Date(this.sunSet),   //NIGHT END
+
+
         })
         
-    }) 
+    })   //.data.DailyForecasts["0"].Day.Icon
     })//then
     };
     render(){

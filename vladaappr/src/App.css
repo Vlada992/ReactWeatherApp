@@ -2,7 +2,7 @@
 .weather__container {
   margin-top: 5%;
   border: 10px solid #cecece;
-  width: 60%;
+  width: 70%;
   background-color: #e5e5e5;
   opacity: 0.9;
   display: -ms-flexbox;
@@ -16,7 +16,7 @@
   -ms-flex-flow: column wrap;
   flex-flow:column wrap;
   padding-bottom: 5%;
-  height: 600px;
+  height:740px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -96,8 +96,23 @@ body {
   color: red;
   height: auto;
   font-size:20px;
-  margin-top:15%;
+  margin-top:4%;
   margin-bottom:3%;
+}
+
+
+#stajlClear1 {
+  font-weight: 800;
+  color: red;
+  height: auto;
+  font-size:20px;
+  margin-bottom:3%;
+}
+
+#phraseWet {
+  color:red;
+  font-size:18px;
+  font-weight:700;
 }
 
 #celzId {
@@ -294,22 +309,36 @@ width:auto;
 #siteName {
 background-color:#e5e5e5;
 border-radius:0%;
+font-style:italic;
+font-family: 'Berlin Sans FB'
+
+
 }
 
 #siteName1 {
-  background-color:#e5e5e5;
+  background-color:#e5e5e5; 
   border-radius:0%;
+  font-style:italic;
+  font-family: 'Berlin Sans FB'
 }
 
 #hitForm {
   margin-top:2%;
-  width:50%;
+  display:flex;
 }
 
 #submitName {
   width:auto;
-  background-color:#e5e5e5;
+  background-color:#d8d8d8; 
   border-radius:0%;
+  font-weight:500;
+  font-family:'Bernard MT';
+}
+
+#submitName:hover{
+  background-color:#cbcbcb;
+  color:black;
+
 }
 #minmaxCont {
   background-color: #c1c1c1;
@@ -317,6 +346,7 @@ border-radius:0%;
   height:80px;
   padding:1%;
   margin-top:4%;
+  margin-bottom:26%;
 }
 @media screen and (max-width: 1200px) and (min-width: 200px) {
   .weather__container {width:auto; height:auto;margin:5%;}
@@ -328,8 +358,7 @@ border-radius:0%;
 }
 
 #bodyDiv {
-  width:350px;
-  margin-bottom:30%;
+  width:420px;
   margin-top:10%;
 }
 
@@ -339,12 +368,14 @@ border-radius:0%;
   height:100px;
 }
 
+
+
 .expandCont {
- background-color:#c1c1c1;
  font-weight:900;
  color:red;
- padding:1%;
 }
+
+
 .hideDiv {
   display:none;
 }
@@ -369,7 +400,7 @@ border-radius:0%;
 #moreid {
   margin-top:3%;
   color:gray;
-  font-size:25px;
+  font-size:20px;
   font-weight:900; 
   font-family:'Verdana';
 }
@@ -382,8 +413,6 @@ border-radius:0%;
 .airCls {
   color:black;
   font-weight:900;
-  /*background-color:#c1c1c1;*/
-
 }
 
 
@@ -396,5 +425,55 @@ border-radius:0%;
 
 #timerGreen {
   color:green;
+}
+
+.circO {
+  font-size:20px;
+  color:#c1c1c1;
+  opacity:0.8;
+  margin-top:15%;
+}
+
+.c1b {
+  color:black;
+}
+
+.c2g {
+  color:#c1c1c1;
+}
+
+
+
+#valCont{
+  background-color:#c1c1c1;
+  border: 1px solid #b7b7b7;
+  display: flex;
+  flex-flow: column;
+  padding-left: 2%;
+
+}
+
+#expDiv {
+ padding:2%;
+ display:flex;
+ flex-flow:column;
+ background-color:#c1c1c1;
+ padding-top:5%;
+ border: 1px solid #b7b7b7;
+
+}
+
+
+.icnImg {
+  width:35px;
+  height:37px;
+  padding:1%;
+}
+
+
+.circO {
+
+  font-size:14px;
+  margin-bottom:10%
 
 }

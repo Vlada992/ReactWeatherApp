@@ -123,7 +123,7 @@ class App extends Component {
         localStorage.setItem('gradovi', this.gradArr[this.gradArr.length -1])
     }
 
-     axios.get("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=u77BxK7btrmFq5ipbObhc868Ly8wkySl&q="+String(localStorage.getItem('gradovi1')) +"%20"+String(localStorage.getItem('drzava'))+"&details=true&offset=7")
+     axios.get("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG&q="+String(localStorage.getItem('gradovi1')) +"%20"+String(localStorage.getItem('drzava'))+"&details=true&offset=7")
      .then(locInfo =>{ 
          console.log(locInfo)
         this.setState({stlState:'showCls'})
@@ -171,25 +171,24 @@ class App extends Component {
                             tmZonUrl,
                             keyState:`${takeKey}`         
                         })
-                  return takeKey                 
+                        var windDirect =  function windDirect(degree){
+                            if (degree > 337.5) return 'Northerly';
+                            if (degree > 292.5) return 'North Westerly';
+                            if (degree > 247.5) return 'Westerly';
+                            if (degree > 202.5) return 'South Westerly';
+                            if (degree > 157.5) return 'Southerly';
+                            if (degree > 122.5) return 'South Easterly';
+                            if (degree > 67.5) return 'Easterly';
+                            if (degree > 22.5) { return 'North Easterly';}
+                            return 'Northerly';
+                        };
+                  return [takeKey, windDirect]                 
      })
      .then((pickKey)=>{
-        axios.get("http://dataservice.accuweather.com/currentconditions/v1/" + pickKey + "?apikey=u77BxK7btrmFq5ipbObhc868Ly8wkySl&details=true")
+        axios.get("http://dataservice.accuweather.com/currentconditions/v1/" + pickKey[0] + "?apikey=HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG&details=true")
      .then(response => {
                 console.log("weather data:", response);
                  let v = response.data['0'];
-                function windDirect(degree){
-                    if (degree > 337.5) return 'Northerly';
-                    if (degree > 292.5) return 'North Westerly';
-                    if (degree > 247.5) return 'Westerly';
-                    if (degree > 202.5) return 'South Westerly';
-                    if (degree > 157.5) return 'Southerly';
-                    if (degree > 122.5) return 'South Easterly';
-                    if (degree > 67.5) return 'Easterly';
-                    if (degree > 22.5) { return 'North Easterly';}
-                    return 'Northerly';
-                }
-
                 this.setState({  
                     tempNowA:v.RealFeelTemperature.Metric.Value, 
                     tempNow:v.Temperature.Metric.Value,
@@ -197,7 +196,7 @@ class App extends Component {
                     currPress:v.Pressure.Metric.Value,
                     clearW:v.WeatherText,
                     visible:v.Visibility.Metric.Value + v.Visibility.Metric.Unit,
-                    windWay:windDirect(v.Wind.Direction.Degrees),
+                    windWay: pickKey[1](v.Wind.Direction.Degrees),
                     windSpd:v.Wind.Speed.Metric.Value + v.Wind.Speed.Metric.Unit,
                     windChillT:v.WindChillTemperature.Metric.Value,
                     apparTemp:v.ApparentTemperature.Metric.Value,
@@ -235,15 +234,12 @@ class App extends Component {
                     maxTempFor:v.TemperatureSummary.Past24HourRange.Maximum.Metric.Value,
                     minTempFor:v.TemperatureSummary.Past24HourRange.Minimum.Metric.Value,
                     weathIcn: String(v.WeatherIcon).length === 1 ? '0' + v.WeatherIcon : v.WeatherIcon
-
                 }) 
-
-
      })
-        return pickKey;
+        return pickKey
     })
     .then((passKeyHere)=>{
-        axios.get("http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + passKeyHere + "?apikey=u77BxK7btrmFq5ipbObhc868Ly8wkySl&details=true&metric=true")
+        axios.get("http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + passKeyHere[0] + "?apikey=HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG&details=true&metric=true")
         .then(resp5Days => {
         console.log('5days res:', resp5Days);
         let allD  =  resp5Days.data.DailyForecasts[0];
@@ -281,20 +277,22 @@ class App extends Component {
          moonSet: String(new Date(allD.Moon.Set)),
          moonAge: allD.Moon.Age,
          moonPhase:allD.Moon.Phase,
-         regDate: 'Weather info for daylight for: ' + allD.Date.apparTempF,
-         nightCloud: allD.Night.CloudCover + "%",  //NIGHT START
+         regDate: 'Weather info for daylight for: ' + new Date(allD.Sun.Rise),
+         nightCloud: allD.Night.CloudCover, //NIGHT START
          nightPerc:  allD.Night.HoursOfRain + "h" + '/' + String(allD.Night.HoursOfIce) + "h" +'/' + String(allD.Night.HoursOfSnow) + "h"  ,
          nightProb: allD.Night.RainProbability + '%' + ' / ' + String(allD.Night.SnowProbability) + '%' + ' / ' + String(allD.Night.IceProbability) + '%',
          nightVal:  allD.Night.Rain.Value +  allD.Night.Rain.Unit + ' / ' + allD.Night.Snow.Value +  allD.Night.Snow.Unit + ' / ' + allD.Night.Ice.Value + allD.Night.Ice.Unit,
          nightTund: allD.Night.ThunderstormProbability + "%",
          nightPhrase: allD.Night.ShortPhrase,
+         nightPhraseL: allD.Night.LongPhrase,
          nightIcn1: String( allD.Night.Icon).length === 1 ? '0' +  allD.Night.Icon :  allD.Night.Icon,
-         nightDate: 'Weather info for night for: ' + new Date(this.sunSet),   //NIGHT END
-
+         nightDate: 'Weather info for night for: ' + new Date(allD.Sun.Set),
+         nightWindS:  allD.Night.Wind.Speed.Value +  allD.Night.Wind.Speed.Unit,
+         nightWindG:  allD.Night.WindGust.Speed.Value + allD.Night.WindGust.Speed.Unit,
+         nightWindDir: passKeyHere[1](allD.Night.Wind.Direction.Degrees),
 
         })
-        
-    })   //.data.DailyForecasts["0"].Day.Icon
+    })  
     })//then
     };
     render(){

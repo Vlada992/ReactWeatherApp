@@ -16,7 +16,7 @@
   -ms-flex-flow: column wrap;
   flex-flow:column wrap;
   padding-bottom: 5%;
-  height:740px;
+  height:790px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -67,14 +67,15 @@ body {
   height: auto;
 }
 
-#stajlPress {
+#stajlPress, #stajlPress1 {
   font-weight: 800;
   color: red;
   display: inline-flex;
   height: auto;
 }
 
-#pressTitl {
+
+#pressTitl, #pressTitl1 {
   font-weight: 900;
   color: black;
 }
@@ -99,15 +100,50 @@ body {
   margin-top:4%;
   margin-bottom:3%;
 }
+#stajlClearBl {
+  font-weight: 800;
+  color: black;
+  height: auto;
+  font-size:18px;
+  margin-top:4%;
+  margin-bottom:3%;
+}
 
-
-#stajlClear1 {
+.stajlClear1 {
   font-weight: 800;
   color: red;
   height: auto;
   font-size:20px;
   margin-bottom:3%;
 }
+.stajlClear2 {
+  font-weight: 800;
+  color: black;
+  height: auto;
+  font-size:20px;
+  margin-bottom:3%;
+}
+.stajlClear1:hover {
+  color:#4c0000;
+}
+.stajlClear2:hover{
+  color:#cc0000;
+}
+#stajlClearAll {
+  font-weight: 800;
+  color: red;
+  height: auto;
+  font-size:20px;
+  margin-bottom:3%;
+}
+#stajlClearAll1 {
+  font-weight: 800;
+  color:black;
+  height: auto;
+  font-size:20px;
+  margin-bottom:3%;
+}
+
 
 #phraseWet {
   color:red;
@@ -160,21 +196,21 @@ body {
   color: red;
 }
 
-#visibleId {
+#visibleId, #visibleId1 {
   font-weight: 900;
   color: black;
   margin-left: 0%;
 }
 
-#redVisb {
+#redVisb, #redVisb1 {
   color: red;
 }
-#redVisb:hover {
+#redVisb:hover, #redVisb1:hover {
   color:#ff7314;
 }
 
 
-#windId {
+#windId, #windId1 {
   font-weight: 900;
   color: black;
   margin-left: 0%;
@@ -184,7 +220,7 @@ body {
   color: red;
 }
 
-#windSpid {
+#windSpid, #windSpid1 {
   font-weight: 900;
   color: black;
   margin-left: 0%;
@@ -212,14 +248,14 @@ color:red;
   margin-bottom: 25%;
 }
 
-#humiditR {
+#humiditR, #humiditR1 {
   font-weight: 900;
   color: black;
   width: auto;
   margin-left: 0%;
 }
 
-#cloudCover {
+#cloudCover, #cloudCover1 {
   font-weight: 900;
   color: black;
   width: 50%;
@@ -242,13 +278,13 @@ color:red;
   color: red;
 }
 
-#cellId {
+#cellId, #cellId1 {
 color: black;
   font-weight: 900;
   width: auto;
 }
 
-#cellInner {
+#cellInner, #cellInnerN {
   color: red;
   width: auto;
 }
@@ -256,12 +292,12 @@ color: black;
   color:#ff7314;
 }
 
-#cellInner1 {
+#cellInner1, #cellInnerN {
   color:red;
 }
 
 
-#devPoint {
+#devPoint, #devPoint1 {
   color: black;
   font-weight: 900;
 }
@@ -272,13 +308,21 @@ color: black;
 .inBrack {
 opacity:0.8;
 color:#ff7314;
+font-weight: 800;
+
+}
+.inBrack1 {
+opacity:0.8;
+color:#4c2206;
+font-weight: 800;
+
 }
 
 #CtoF:hover{
   color:#e56712;
 }
 
-#deppTemp {
+#deppTemp, #deppTemp {
 color:red;
 
 }
@@ -295,13 +339,13 @@ font-weight:900;
   color:red;
 }
 
-#departId {
+#departId, #departId1 {
 color:black;
 font-weight:900;
 width:auto;
 }
 
-#departCf:hover {
+#departCf:hover, #departCf1 {
   color:#e56712;
 }
 
@@ -460,14 +504,23 @@ font-family: 'Berlin Sans FB'
  background-color:#c1c1c1;
  padding-top:5%;
  border: 1px solid #b7b7b7;
-
 }
+
+#expDiv1 {
+  padding:2%;
+  display:flex;
+  flex-flow:column;
+  background-color:/*#c1c1c1;*/ #9a9a9a;
+  padding-top:5%;
+  border: 1px solid #b7b7b7;
+ }
 
 
 .icnImg {
-  width:35px;
-  height:37px;
+  width:37px;
+  height:40px;
   padding:1%;
+  color:red
 }
 
 

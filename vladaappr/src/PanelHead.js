@@ -126,7 +126,6 @@ class PanelHead extends Component{
         <div id='stajlTempNowA' className='container'><div className='spanId1'>(Feels like: &nbsp;</div><span className='tempInner'> <span className={this.state.showDiv7}>{this.props.data.tempNowA}</span> <span className={this.state.hideDiv7}>{this.state.tempNowA}</span>     <span>{this.state.stringCels}</span></span>)
         <div id ='windTemp'>(Wind chill: <span className='tempInner'><span className={this.state.showDiv7}>{this.props.data.windChillT}</span> <span className={this.state.hideDiv7}>{this.state.windChillT}</span><span>{this.state.stringCels}</span></span>)</div>
         <div id ='apparTempId'>(Apparent:&nbsp;<span className='tempInner'><span className={this.state.showDiv7}>{this.props.data.apparTemp}</span>  <span className={this.state.hideDiv7}>{this.state.apparTemp}</span>     <span>{this.state.stringCels}</span></span>)</div>
-
       </div>
       </div>
       <div id='minmaxCont'>

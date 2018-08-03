@@ -22,6 +22,7 @@ class App extends Component {
         this.m = 'm';
         this.clickArr = [];
         this.gradArr=[];
+        //this.currClr = 'titleCityR'
         this.state = {    
             tempNowA: '',
             tempUnitA: '',
@@ -89,7 +90,11 @@ class App extends Component {
             airPln:'',
             onlyTime:'',
             ampmPart:'',
-            imgMoon:'images/moon1.png'
+            imgMoon:'images/moon1.png',
+            interval:'',
+            cityClr:'titleCityR',
+            redClr:'titleCityR',
+            blackClr:'titleCityB'
 
         }
     };
@@ -97,14 +102,21 @@ class App extends Component {
     componentDidMount(){
         if(localStorage.getItem('gradovi') !== undefined){
             window.onload = (e)=> {
-            this.callonClick(e)
+            this.callonClick(e);
         }
         }
     }
-    
+
+    childCompData(cityColorD){
+        console.log(cityColorD)
+        //this.currClr = cityColorD;
+        //this.setState({cityClr:cityColorD})
+    }
+
 
      callonClick(e){
      e.preventDefault();
+     console.log('black', this.state.cityClr)
      console.log($)
      this.clickArr.push('clicked');
      let holdGrad =  document.getElementById('siteName').value
@@ -123,11 +135,27 @@ class App extends Component {
         localStorage.setItem('gradovi', this.gradArr[this.gradArr.length -1])
     }
 
+
+     var initialValue = 'type city...';
+     var initialValue1 = 'type country...';
+     var query = document.getElementById('siteName');
+     var query1 = document.getElementById('siteName1');
+     query.placeholder = initialValue;
+     query.className = 'form-control'
+     query1.className='form-control'
+     query1.placeholder = initialValue1;
+     query1.value = ''
+     query.value =''
+
+
+
+
+
      axios.get("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG&q="+String(localStorage.getItem('gradovi1')) +"%20"+String(localStorage.getItem('drzava'))+"&details=true&offset=7")
      .then(locInfo =>{ 
          console.log(locInfo)
         this.setState({stlState:'showCls'})
-    
+        //clearInterval(this.interval);
         var lat   = locInfo.data["0"].GeoPosition.Latitude;
         var long  = locInfo.data["0"].GeoPosition.Longitude;
         var targetDate = new Date();
@@ -142,9 +170,8 @@ class App extends Component {
         var millisecondselapsed = refreshDate - targetDate
         localdate.setMilliseconds(localdate.getMilliseconds()+ millisecondselapsed)
         var toLocStr = localdate.toLocaleString();
-        //var myInt;
-        setInterval(()=>{
-       /*let myInt =*/localdate.setSeconds(localdate.getSeconds()+1)
+        /*this.interval= setInterval(()=>{   
+        localdate.setSeconds(localdate.getSeconds()+1)
                     this.setState({
                         currTime:localdate.toLocaleString().slice(0, 10),
                         onlyTime:localdate.toLocaleString().slice(10, localdate.toLocaleString().length - 2),
@@ -153,8 +180,9 @@ class App extends Component {
                         currDay: String(localdate).slice(0,4),
                         currMont: String(localStorage.getItem('myMonths')).split(',')[new Date().getMonth()]
                     })
-                }, 1000) 
+                }, 1000) */
         })
+
                         let cityCountN = locInfo.data["0"].EnglishName + `, ` + locInfo.data["0"].Country.EnglishName;
                         let latLon = locInfo.data["0"].GeoPosition.Latitude + `/` + locInfo.data["0"].GeoPosition.Longitude;
                         let elevaT = locInfo.data["0"].GeoPosition.Elevation.Metric.Value + locInfo.data["0"].GeoPosition.Elevation.Metric.Unit;
@@ -242,8 +270,8 @@ class App extends Component {
         axios.get("http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + passKeyHere[0] + "?apikey=HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG&details=true&metric=true")
         .then(resp5Days => {
         console.log('5days res:', resp5Days);
-        let allD  =  resp5Days.data.DailyForecasts[0];
-        let allData = resp5Days.data.DailyForecasts[0].AirAndPollen
+        let allD  =  resp5Days.data.DailyForecasts[1];
+        let allData = resp5Days.data.DailyForecasts[1].AirAndPollen
         this.setState({
          airPlnN : allData[0].Name,
          airPlnVT: allData[0].Value,
@@ -295,10 +323,10 @@ class App extends Component {
     })  
     })//then
     };
-    render(){
+    render(){ 
     return(
       <div className = {['weather__container', 'container'].join(' ')}>
-        <PanelBody dataB={this.state} mainF={this.callonClick}/>
+        <PanelBody dataB={this.state} mainF ={this.callonClick}   parentCb={this.childCompData}/>
         <PanelHead data ={this.state} funccf ={this.ChangeToF}/>
       </div>
     )      

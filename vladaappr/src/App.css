@@ -80,9 +80,21 @@ body {
   color: black;
 }
 
-#titleCity {
+#titleCityR {
   font-weight: 900;
   color: red;
+  opacity: 0.9;
+  height: auto;
+  margin-top: 6%;
+  font-size: 26px;
+  margin-left: 0%;
+  font-family: 'Verdana';
+  margin-bottom: 3%;
+}
+
+#titleCityB {
+  font-weight: 900;
+  color: black;
   opacity: 0.9;
   height: auto;
   margin-top: 6%;
@@ -402,7 +414,7 @@ font-family: 'Berlin Sans FB'
 }
 
 #bodyDiv {
-  width:420px;
+  width:440px;
   margin-top:10%;
 }
 
@@ -497,7 +509,16 @@ font-family: 'Berlin Sans FB'
 
 }
 
-#expDiv {
+#valCont1{
+  border: 1px solid #b7b7b7;
+  display: flex;
+  flex-flow: column;
+  padding-left: 2%;
+  background-color: #9a9a9a;
+}
+
+
+.expDiv {
  padding:2%;
  display:flex;
  flex-flow:column;
@@ -506,11 +527,11 @@ font-family: 'Berlin Sans FB'
  border: 1px solid #b7b7b7;
 }
 
-#expDiv1 {
+.expDiv1 {
   padding:2%;
   display:flex;
   flex-flow:column;
-  background-color:/*#c1c1c1;*/ #9a9a9a;
+  background-color: #9a9a9a;
   padding-top:5%;
   border: 1px solid #b7b7b7;
  }
@@ -525,8 +546,13 @@ font-family: 'Berlin Sans FB'
 
 
 .circO {
-
   font-size:14px;
   margin-bottom:10%
+}
 
+#siteName1:-webkit-autofill, textarea:-webkit-autofill, #siteName:-webkit-autofill, #siteName:-webkit-autofill:hover,
+#siteName:-webkit-autofill:focus,
+#siteName:-webkit-autofill:active, #siteName1:-webkit-autofill:hover, #siteName1:-webkit-autofill:focus, #siteName1:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #e5e5e5 inset;
+  background-color:#e5e5e5 !important;
 }

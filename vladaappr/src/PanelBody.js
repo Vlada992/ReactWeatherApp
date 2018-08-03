@@ -1,6 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import './App.css';
+import PanelHead from './PanelHead.js';
 import moon1 from './images/moon1.png';
 import sun1 from './images/sun1.png'; 
 import thunder1 from './images/lightning1.png';
@@ -63,7 +64,6 @@ class PanelBody extends Component {
     this.togleR7 = false;
     this.togleR8 = false;
     this.togleR9 = false;
-
     this.cels  = '℃';
     this.fahr = '℉';
     this.mlbr = 'mb'
@@ -77,9 +77,15 @@ class PanelBody extends Component {
     this.move = 'hideCls'
     this.add = 'showCls'
     this.divShow = 'expDiv'
+    this.divShow1 = 'expDiv1'
     this.divHide = ''
+    this.divHide1 = ''
+    this.valDiv = ''
+    /*this.redClr= 'titleCityR'
+    this.blackClr= 'titleCityB'*/
     this.state = {
       pointDew:'',
+      cityClr:'titleCityR',
       depCorF:'℃',
       celsfahr:'℃',
       inhmb:'mb',
@@ -118,8 +124,10 @@ class PanelBody extends Component {
       expState3:'showCls',
       expState4:'hideCls',
       stateid:'expDiv',
-      stateid1:'expDiv1'
-
+      stateid1:'expDiv1',
+      valCont: 'valCont',
+      valAlway: 'valCont',
+      valCont1:'valCont1'
     }
 };
 
@@ -127,7 +135,6 @@ class PanelBody extends Component {
 changeToF1(event){
   let hideDiv1 = {...this.state.hideDiv1, hit1:this.state.showDiv1}
   let showDiv1 = {...this.state.showDiv1, hit1:this.state.hideDiv1};
-
   let pointDew = {...this.props.dataB.pointDew, toF:this.props.dataB.pointDewF, toFor:this.props.dataB.pointDewFor}
   let depCorF = {...this.props.dataB.depCorF, hit: this.fahr, hit1: this.cels}
   this.setState({hideDiv1:hideDiv1.hit1})
@@ -225,23 +232,35 @@ ChangeToFT(event){
 
 
 expandF(classArg){
+    let cityClr = {...this.props.dataB.cityClr, hit1:this.props.dataB.redClr, hit2:this.props.dataB.blackClr}
+
     if(classArg == 'c1b'){
     return false;
     }else if(classArg == 'c2g'){
-  let stateid = {...this.state.stateid, hit1:this.divShow, hit2:this.divHide}
+  let stateid = {...this.state.stateid, hit1:this.divHide, hit2:this.divShow}
+  let stateid1 = {...this.state.stateid, hit1:this.divHide1, hit2:this.divShow1}
   let expState2 = {...this.state.expState2, hit1:this.move, hit2:this.move}
   let expState =  {...this.state.expState, hit1:this.add, hit2:this.move}
   let expState1 = {...this.state.expState1, hit1:this.move, hit2:this.add}
   let blgry  = {...this.state.blgry, hit1: this.state.grayClr, hit2: this.state.blackClr}
   let blgrx  = {...this.state.blgrx, hit1: this.state.blackClr, hit2: this.state.grayClr}
   let toggleDiv = {...this.state.toggleDiv, hit1:this.move, hit2:this.add}
-  if (this.togleR7 === false ){
+
+  if (this.togleR7 === false){
       this.setState({expState:expState.hit1})
       this.setState({expState1:expState1.hit1})
       this.setState({expState2:expState2.hit1})
       this.setState({blgrx:blgrx.hit1})
       this.setState({blgry:blgry.hit1})
       this.setState({toggleDiv:toggleDiv.hit1})
+      this.setState({stateid:stateid.hit2})
+      this.setState({stateid1:stateid1.hit1})
+
+      //uzmi color bga i promeni u crno i obrnuto.
+      this.setState({cityClr:cityClr.hit2})
+
+
+      this.props.parentCb('titleCityB' )
       this.togleR7 = true
 } else{
       this.setState({expState2:expState2.hit1})
@@ -250,27 +269,41 @@ expandF(classArg){
       this.setState({toggleDiv:toggleDiv.hit2})
       this.setState({blgrx:blgrx.hit2})
       this.setState({blgry:blgry.hit2})
+      this.setState({stateid:stateid.hit1})
+      this.setState({stateid1:stateid1.hit1})
       this.togleR7 = false;
+
+      this.setState({cityClr:cityClr.hit1})
+
+
+
   }
 };
 }
 
 
+
 expandNightF(){
- console.log('radimo')
+ let stateid = {...this.state.stateid, hit1:this.divHide, hit2:this.divShow}
+ let stateid1 = {...this.state.stateid, hit1:this.divHide1, hit2:this.divShow1}
  let expState2 = {...this.state.expState2, hit1:this.add, hit2:this.move}
  let expState =  {...this.state.expState, hit1:this.move, hit2:this.add}
  let expState1 = {...this.state.expState1, hit1:this.move, hit2:this.add}
  let blgry  = {...this.state.blgry, hit1: this.state.grayClr, hit2: this.state.blackClr}
  let blgrx  = {...this.state.blgrx, hit1: this.state.blackClr, hit2: this.state.grayClr}
  let toggleDiv = {...this.state.toggleDiv, hit1:this.move, hit2:this.add}
- if (this.togleR8 === false ){
+ if (this.togleR8 === false){
     this.setState({expState:expState.hit1})
     this.setState({expState1:expState1.hit1})
     this.setState({expState2:expState2.hit1})
     this.setState({blgrx:blgrx.hit1})
     this.setState({blgry:blgry.hit1})
     this.setState({toggleDiv:toggleDiv.hit1})
+    this.setState({stateid:stateid.hit1})
+    this.setState({stateid1:stateid1.hit2})
+
+
+
     this.togleR8 = true
 } else{
     this.setState({expState1:expState1.hit2})
@@ -279,6 +312,8 @@ expandNightF(){
     this.setState({blgrx:blgrx.hit1})
     this.setState({blgry:blgry.hit1})
     this.setState({expState2:expState2.hit2})
+    this.setState({stateid:stateid.hit2})
+    this.setState({stateid1:stateid1.hit1})
     this.togleR8 = false;
 }
 }
@@ -293,6 +328,7 @@ expandNightF1(){
     let blgry  = {...this.state.blgry, hit1: this.state.grayClr, hit2: this.state.blackClr}
     let blgrx  = {...this.state.blgrx, hit1: this.state.blackClr, hit2: this.state.grayClr}
     let toggleDiv = {...this.state.toggleDiv, hit1:this.add, hit2:this.move}
+    let valCont = {...this.state.valCont, hit1:this.state.valCont1, hit2:this.state.valAlway}
     if (this.togleR9 === false ){
        this.setState({expState:expState.hit1})
        this.setState({expState1:expState1.hit1})
@@ -302,6 +338,7 @@ expandNightF1(){
        this.setState({blgrx:blgrx.hit2})
        this.setState({blgry:blgry.hit2})
        this.setState({toggleDiv:toggleDiv.hit1})
+       this.setState({valCont:valCont.hit1}) //menjaj u tamniju boju prvi deo.
        this.togleR9 = true
    } else{
        this.setState({expState1:expState1.hit1})
@@ -312,10 +349,11 @@ expandNightF1(){
        this.setState({expState2:expState2.hit1})
        this.setState({expState3:expState3.hit2})
        this.setState({expState4:expState4.hit2})
+       this.setState({valCont:valCont.hit2})//vracaj u svetliju boju
        this.togleR9 = false;
    }
-
 }
+
 
   render(){
     return(
@@ -327,13 +365,12 @@ expandNightF1(){
         </form> 
 
         <div className={this.state.toggleDiv}>
-        <div id='valCont'>
+        <div id={this.state.valCont}>
         <div  className={this.state.expState3} id='stajlClear'>  <span>{String(this.props.dataB.sunRise).slice(0, 16)}</span> &nbsp;&nbsp; {this.props.dataB.clearW} &nbsp;<span className='stajlClear1'  onClick={()=> this.expandNightF1()} title={this.props.dataB.regDate}>(Daylight)<img src={dayarrow}/></span>&nbsp;&nbsp;
-       &nbsp;&nbsp;&nbsp;&nbsp;<span><img id='weatherImg1' alt='accuweather.com' src={`http://apidev.accuweather.com/developers/Media/Default/WeatherIcons/${this.props.dataB.weathIcn1 == 0 ? '0' + 1 : this.props.dataB.weathIcn1}-s.png`}/></span>
-        <div id ='phraseWet'>(<span  title={this.props.dataB.phraseTitl} className='inBrack'>{this.props.dataB.phraseW}</span>)</div></div>
+        &nbsp;&nbsp;&nbsp;&nbsp; <div id ='phraseWet'>(<span  title={this.props.dataB.phraseTitl} className='inBrack'>{this.props.dataB.phraseW}</span>) &nbsp;&nbsp; <span><img id='weatherImg1' alt='accuweather.com' src={`http://apidev.accuweather.com/developers/Media/Default/WeatherIcons/${this.props.dataB.weathIcn1 == 0 ? '0' + 1 : this.props.dataB.weathIcn1}-s.png`}/></span>  </div>   </div>
         
         <div  className={this.state.expState4} id='stajlClearBl'> <span>{String(this.props.dataB.sunRise).slice(0, 16)}</span>     {this.props.dataB.clearW} &nbsp;<span className='stajlClear2'  onClick={()=> this.expandNightF1()} title={this.props.dataB.nightDate}>(Night)<img src={nightarrow}/></span>&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;<div id ='phraseWet'>(<span  title={this.props.dataB.nightPhraseL} className='inBrack1'>{this.props.dataB.nightPhrase}</span>)&nbsp;&nbsp; <span><img id='weatherImg2' alt='accuweather.com' src={`http://apidev.accuweather.com/developers/Media/Default/WeatherIcons/${this.props.dataB.nightIcn1 == 0 ? '0' + 1 : this.props.dataB.nightIcn1}-s.png`}/></span></div></div>
+        &nbsp;&nbsp;&nbsp;&nbsp;  <div id ='phraseWet'>(<span  title={this.props.dataB.nightPhraseL} className='inBrack1'>{this.props.dataB.nightPhrase}</span>)&nbsp;&nbsp; <span><img id='weatherImg2' alt='accuweather.com' src={`http://apidev.accuweather.com/developers/Media/Default/WeatherIcons/${this.props.dataB.nightIcn1 == 0 ? '0' + 1 : this.props.dataB.nightIcn1}-s.png`}/></span></div></div>
         <div className={this.state.expState3} id ='cloudCover'><img className='icnImg' alt='cloudiness'  src={cloudDay}/> &nbsp;&nbsp;Cloudiness:<span className='allRed'>&nbsp; {this.props.dataB.cloudCov}&#37;</span></div>
         <div className={this.state.expState4} id ='cloudCover1'><img className='icnImg' alt='cloudiness at night'  src={clouding}/> &nbsp;&nbsp;Cloudiness:<span className='allRed'>&nbsp; {this.props.dataB.nightCloud}&#37;</span></div>     
         <div className={this.state.expState3} id='pressTitl'><img className='icnImg' alt='pressure'  src={pressDay}/> &nbsp;&nbsp;Pressure:&nbsp;<div onClick={()=> this.ChangeToInhg()} id ='stajlPress'> &nbsp;<span className={this.state.showDiv3}>{this.props.dataB.currPress}</span> &nbsp;<span className={this.state.hideDiv3}>{this.state.currPress}</span>&nbsp;   <span id='unitToI'>{this.state.inhmb}</span> &nbsp; (<span className='inBrack'>{this.props.dataB.pressTend}</span>)</div></div>       
@@ -362,7 +399,7 @@ expandNightF1(){
 
 
 
-        <div className={this.state.expState} id='expDiv'>
+        <div className={[this.state.expState, this.state.stateid].join(' ')}>
         <span  className={[this.state.expState, 'expandCont'].join(' ')} id='stajlClearAll' title={this.props.dataB.regDate}><span className ='stajlClear1' onClick={()=> this.expandNightF()}>(Daylight)<img src={dayarrow}/></span> &nbsp;  {String(this.props.dataB.sunRise).slice(0, 16)}</span>
         <div className={[this.state.expState, 'expandCont'].join(' ')}><span className='airCls'><img className='icnImg' alt='Air pollution'  src={air1}/> &nbsp;&nbsp;{this.props.dataB.airPlnN}&nbsp;({this.props.dataB.airPlnT}, pollution): &nbsp;</span>  {this.props.dataB.airPlnVT}&nbsp;(<span className='catOrn'>{this.props.dataB.airPlnC}</span>)</div>
         <div className={[this.state.expState, 'expandCont'].join(' ')}><span className='airCls'><img className='icnImg' alt='grass pollution'  src={grass2}/> &nbsp;&nbsp;{this.props.dataB.grassPlnN}(pollution):&nbsp;</span> {this.props.dataB.grassPlnV} &#13221; &nbsp;(<span className='catOrn'>{this.props.dataB.grassPlnC}</span>)</div>
@@ -375,15 +412,14 @@ expandNightF1(){
         <div className={[this.state.expState, 'expandCont'].join(' ')}><span className='airCls'><img className='icnImg' alt='precipitation value'  src={percip1}/> &nbsp;&nbsp;Rain/snow/ice (value):&nbsp;</span> {this.props.dataB.percitVal} &nbsp;</div>
         <div className={[this.state.expState, 'expandCont'].join(' ')}><span className='airCls'><img className='icnImg' alt='thunder'  src={thunder1}/> &nbsp;&nbsp;Thunderstorm (probability):&nbsp;</span> {this.props.dataB.thunderProb} &nbsp;</div>
         <div className={[this.state.expState, 'expandCont'].join(' ')}><span className='airCls'><img className='icnImg' alt='sun'  src={sun1}/> &nbsp;&nbsp;Sun (rise/set):&nbsp;</span> <span title={this.props.dataB.sunRise}>{String(this.props.dataB.sunRise).slice(16, 24)}</span>  /  <span title={this.props.dataB.sunSet}>{ String(this.props.dataB.sunSet).slice(16, 24)}</span> &nbsp;</div>
-        <div className={[this.state.expState, 'expandCont'].join(' ')}><span className='airCls'><img className='icnImg' alt='moon'  src={moon1}/> &nbsp;&nbsp; Moon (rise/set/age):&nbsp;</span> <span title={this.props.dataB.moonRise}>{String(this.props.dataB.moonRise).slice(16, 21)}</span>  /  <span title={this.props.dataB.moonSet}>{ String(this.props.dataB.moonSet).slice(16, 21)}</span> &nbsp;<span className='catOrn' title={this.props.dataB.moonPhase}>({this.props.dataB.moonAge})</span>&nbsp;</div>
+        <div className={[this.state.expState, 'expandCont'].join(' ')}><span className='airCls'><img className='icnImg' alt='moon'  src={moon1}/> &nbsp;&nbsp;Moon (rise/set/age):&nbsp;</span> <span title={this.props.dataB.moonRise}>{String(this.props.dataB.moonRise).slice(16, 21)}</span>  /  <span title={this.props.dataB.moonSet}>{ String(this.props.dataB.moonSet).slice(16, 21)}</span> &nbsp;<span className='catOrn' title={this.props.dataB.moonPhase}>({this.props.dataB.moonAge})</span>&nbsp;</div>
 
         </div>
 
 
 
 
-        <div className={this.state.expState2} id='expDiv1'>
-
+        <div className={[this.state.expState2, this.state.stateid1].join(' ')}>
         <span  className={[this.state.expState2, 'expandCont'].join(' ')} id='stajlClearAll1'  title={this.props.dataB.nightDate}><span   className={[this.state.blgrx, 'stajlClear2'].join(' ')} onClick={()=> this.expandNightF()}>(Night)<img src={nightarrow}/></span> &nbsp;  {String(this.props.dataB.sunRise).slice(0, 16)}</span>
         <div className={[this.state.expState2, 'expandCont'].join(' ')}><span className='airCls'><img className='icnImg' alt='Air pollution'  src={air1}/> &nbsp;&nbsp;{this.props.dataB.airPlnN}&nbsp;({this.props.dataB.airPlnT}, pollution): &nbsp;</span>  {this.props.dataB.airPlnVT}&nbsp;(<span className='catOrn'>{this.props.dataB.airPlnC}</span>)</div>
         <div className={[this.state.expState2, 'expandCont'].join(' ')}><span className='airCls'><img className='icnImg' alt='grass pollution'  src={grass2}/> &nbsp;&nbsp;{this.props.dataB.grassPlnN}(pollution):&nbsp;</span> {this.props.dataB.grassPlnV} &#13221; &nbsp;(<span className='catOrn'>{this.props.dataB.grassPlnC}</span>)</div>
@@ -396,19 +432,14 @@ expandNightF1(){
         <div className={[this.state.expState2, 'expandCont'].join(' ')}><span className='airCls'><img className='icnImg' alt='precipitation value'  src={percip1}/> &nbsp;&nbsp;Rain/snow/ice (value):&nbsp;</span> {this.props.dataB.nightVal} &nbsp;</div>
         <div className={[this.state.expState2, 'expandCont'].join(' ')}><span className='airCls'><img className='icnImg' alt='thunder'  src={thunder1}/> &nbsp;&nbsp;Thunderstorm (probability):&nbsp;</span> {this.props.dataB.nightTund} &nbsp;</div>
         <div className={[this.state.expState2, 'expandCont'].join(' ')}><span className='airCls'><img className='icnImg' alt='sun'  src={sun1}/> &nbsp;&nbsp;Sun (rise/set):&nbsp;</span> <span title={this.props.dataB.sunRise}>{String(this.props.dataB.sunRise).slice(16, 24)}</span>  /  <span title={this.props.dataB.sunSet}>{ String(this.props.dataB.sunSet).slice(16, 24)}</span> &nbsp;</div>
-        <div className={[this.state.expState2, 'expandCont'].join(' ')}><span className='airCls'><img className='icnImg' alt='moon'  src={moon1}/> &nbsp;&nbsp; Moon (rise/set/age):&nbsp;</span> <span title={this.props.dataB.moonRise}>{String(this.props.dataB.moonRise).slice(16, 21)}</span>  /  <span title={this.props.dataB.moonSet}>{ String(this.props.dataB.moonSet).slice(16, 21)}</span> &nbsp;<span className='catOrn' title={this.props.dataB.moonPhase}>({this.props.dataB.moonAge})</span>&nbsp;</div>
+        <div className={[this.state.expState2, 'expandCont'].join(' ')}><span className='airCls'><img className='icnImg' alt='moon'  src={moon1}/> &nbsp;&nbsp;Moon (rise/set/age):&nbsp;</span> <span title={this.props.dataB.moonRise}>{String(this.props.dataB.moonRise).slice(16, 21)}</span>  /  <span title={this.props.dataB.moonSet}>{ String(this.props.dataB.moonSet).slice(16, 21)}</span> &nbsp;<span className='catOrn' title={this.props.dataB.moonPhase}>({this.props.dataB.moonAge})</span>&nbsp;</div>
         </div>
 
 
 
 
 
-        <div><i title='Show one part' onClick={()=> this.expandF(this.state.blgry)} className={["fa fa-circle circO", this.state.blgry].join(' ')}></i>&nbsp;&nbsp; <i title='Show one part' onClick={()=> this.expandF(this.state.blgrx)} className={["fa fa-circle circO", this.state.blgrx].join(' ')}></i>&nbsp;&nbsp; <i  className={["fa fa-circle circO",  this.state.grayClr].join(' ')}></i>&nbsp;&nbsp; <i className={["fa fa-circle circO",  this.state.grayClr].join(' ')}></i></div>
-
-
-
-
-
+        <div><i title='Show one part' onClick={()=> this.expandF(this.state.blgry)} className={["fa fa-circle circO", this.state.blgry].join(' ')}></i>&nbsp;&nbsp; <i title='Show one part' onClick={()=> this.expandF(this.state.blgrx)} className={["fa fa-circle circO", this.state.blgrx].join(' ')}></i>&nbsp;&nbsp; </div>
 
 
         </div>
@@ -416,15 +447,3 @@ expandNightF1(){
   }
 };
 export default PanelBody;
-
-
-
-/*
-        <div>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span><img id='weatherImg2' alt='accuweather.com' src={`http://apidev.accuweather.com/developers/Media/Default/WeatherIcons/${this.props.dataB.nightIcn1 == 0 ? '0' + 1 : this.props.dataB.nightIcn1}-s.png`}/></span>
-        </div>*/ 
-
-        /*
-        <div>
-        <div id ='phraseWet1'>(<span  title={this.props.dataB.nightPhraseL} className='inBrack'>{this.props.dataB.nightPhrase}</span>)</div></div>
-        </div>*/ 

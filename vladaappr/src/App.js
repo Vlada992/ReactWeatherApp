@@ -4,13 +4,14 @@ import React from 'react';
 import { Component } from 'react';
 import './App.css';
 import PanelHead from './PanelHead.js';
-import PanelBody from './PanelBody.js'
+import PanelBody from './PanelBody.js';
 import axios from 'axios';
 
 class App extends Component {
     constructor(props){
         super(props);   
         this.callonClick = this.callonClick.bind(this);
+        this.childCompData = this.childCompData.bind(this);
         this.togleR = false;
         this.cels  = '℃';
         this.fahr = '℉';
@@ -22,7 +23,6 @@ class App extends Component {
         this.m = 'm';
         this.clickArr = [];
         this.gradArr=[];
-        //this.currClr = 'titleCityR'
         this.state = {    
             tempNowA: '',
             tempUnitA: '',
@@ -94,8 +94,13 @@ class App extends Component {
             interval:'',
             cityClr:'titleCityR',
             redClr:'titleCityR',
-            blackClr:'titleCityB'
-
+            blackClr:'titleCityB',
+            tempClr:'stajlTempNowR',
+            tempRed: 'stajlTempNowR',
+            tempBrown:'stajlTempNowB',
+            tempClrInn:'tempInnerR',
+            tempRedI: 'tempInnerR',
+            tempBrownI:'tempinnerB'
         }
     };
 
@@ -107,16 +112,18 @@ class App extends Component {
         }
     }
 
-    childCompData(cityColorD){
-        console.log(cityColorD)
-        //this.currClr = cityColorD;
-        //this.setState({cityClr:cityColorD})
+    childCompData(cityColorD, tempColor, tempColorInn){
+        this.setState({
+            cityClr:cityColorD,
+            tempClr:tempColor,
+            tempClrInn: tempColorInn
+        })
+       // this.setState({tempClr:tempColor})
     }
 
 
      callonClick(e){
      e.preventDefault();
-     console.log('black', this.state.cityClr)
      console.log($)
      this.clickArr.push('clicked');
      let holdGrad =  document.getElementById('siteName').value
@@ -125,8 +132,6 @@ class App extends Component {
      localStorage.setItem('gradovi', holdGrad) 
      localStorage.setItem('drzava', holdCountry)
      localStorage.setItem('gradovi2', this.gradArr[this.gradArr.length -1]   )
-     console.log('bulian:', Boolean(localStorage.getItem('gradovi2')),'value', localStorage.getItem('gradovi'))
-
     if(localStorage.getItem('gradovi') || localStorage.getItem('gradovi2')){
         localStorage.removeItem('gradovi1')
         localStorage.setItem('gradovi1', holdGrad)
@@ -151,7 +156,7 @@ class App extends Component {
 
 
 
-     axios.get("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG&q="+String(localStorage.getItem('gradovi1')) +"%20"+String(localStorage.getItem('drzava'))+"&details=true&offset=7")
+     axios.get("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=u77BxK7btrmFq5ipbObhc868Ly8wkySl&q="+String(localStorage.getItem('gradovi1')) +"%20"+String(localStorage.getItem('drzava'))+"&details=true&offset=7")
      .then(locInfo =>{ 
          console.log(locInfo)
         this.setState({stlState:'showCls'})
@@ -213,10 +218,11 @@ class App extends Component {
                   return [takeKey, windDirect]                 
      })
      .then((pickKey)=>{
-        axios.get("http://dataservice.accuweather.com/currentconditions/v1/" + pickKey[0] + "?apikey=HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG&details=true")
+        axios.get("http://dataservice.accuweather.com/currentconditions/v1/" + pickKey[0] + "?apikey=u77BxK7btrmFq5ipbObhc868Ly8wkySl&details=true")
      .then(response => {
                 console.log("weather data:", response);
                  let v = response.data['0'];
+
                 this.setState({  
                     tempNowA:v.RealFeelTemperature.Metric.Value, 
                     tempNow:v.Temperature.Metric.Value,
@@ -267,7 +273,7 @@ class App extends Component {
         return pickKey
     })
     .then((passKeyHere)=>{
-        axios.get("http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + passKeyHere[0] + "?apikey=HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG&details=true&metric=true")
+        axios.get("http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + passKeyHere[0] + "?apikey=u77BxK7btrmFq5ipbObhc868Ly8wkySl&details=true&metric=true")
         .then(resp5Days => {
         console.log('5days res:', resp5Days);
         let allD  =  resp5Days.data.DailyForecasts[1];

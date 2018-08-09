@@ -6,6 +6,7 @@ import './App.css';
 import PanelHead from './PanelHead.js';
 import PanelBody from './PanelBody.js';
 import axios from 'axios';
+//import {TodoList1} from './PanelHead.js';
 
 class App extends Component {
     constructor(props){
@@ -118,13 +119,13 @@ class App extends Component {
             tempClr:tempColor,
             tempClrInn: tempColorInn
         })
-       // this.setState({tempClr:tempColor})
     }
 
 
      callonClick(e){
      e.preventDefault();
-     console.log($)
+     console.log($)    
+    
      this.clickArr.push('clicked');
      let holdGrad =  document.getElementById('siteName').value
      this.gradArr.push(holdGrad);
@@ -153,13 +154,11 @@ class App extends Component {
      query.value =''
 
 
-
-
-
      axios.get("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=u77BxK7btrmFq5ipbObhc868Ly8wkySl&q="+String(localStorage.getItem('gradovi1')) +"%20"+String(localStorage.getItem('drzava'))+"&details=true&offset=7")
      .then(locInfo =>{ 
          console.log(locInfo)
-        this.setState({stlState:'showCls'})
+
+
         //clearInterval(this.interval);
         var lat   = locInfo.data["0"].GeoPosition.Latitude;
         var long  = locInfo.data["0"].GeoPosition.Longitude;
@@ -174,8 +173,10 @@ class App extends Component {
         var refreshDate = new Date() 
         var millisecondselapsed = refreshDate - targetDate
         localdate.setMilliseconds(localdate.getMilliseconds()+ millisecondselapsed)
+
+
         var toLocStr = localdate.toLocaleString();
-        /*this.interval= setInterval(()=>{   
+        this.interval= setInterval(()=>{   
         localdate.setSeconds(localdate.getSeconds()+1)
                     this.setState({
                         currTime:localdate.toLocaleString().slice(0, 10),
@@ -185,9 +186,8 @@ class App extends Component {
                         currDay: String(localdate).slice(0,4),
                         currMont: String(localStorage.getItem('myMonths')).split(',')[new Date().getMonth()]
                     })
-                }, 1000) */
+                }, 1000) 
         })
-
                         let cityCountN = locInfo.data["0"].EnglishName + `, ` + locInfo.data["0"].Country.EnglishName;
                         let latLon = locInfo.data["0"].GeoPosition.Latitude + `/` + locInfo.data["0"].GeoPosition.Longitude;
                         let elevaT = locInfo.data["0"].GeoPosition.Elevation.Metric.Value + locInfo.data["0"].GeoPosition.Elevation.Metric.Unit;
@@ -221,8 +221,7 @@ class App extends Component {
         axios.get("http://dataservice.accuweather.com/currentconditions/v1/" + pickKey[0] + "?apikey=u77BxK7btrmFq5ipbObhc868Ly8wkySl&details=true")
      .then(response => {
                 console.log("weather data:", response);
-                 let v = response.data['0'];
-
+                let v = response.data['0'];
                 this.setState({  
                     tempNowA:v.RealFeelTemperature.Metric.Value, 
                     tempNow:v.Temperature.Metric.Value,
@@ -312,7 +311,7 @@ class App extends Component {
          moonAge: allD.Moon.Age,
          moonPhase:allD.Moon.Phase,
          regDate: 'Weather info for daylight for: ' + new Date(allD.Sun.Rise),
-         nightCloud: allD.Night.CloudCover, //NIGHT START
+         nightCloud: allD.Night.CloudCover, 
          nightPerc:  allD.Night.HoursOfRain + "h" + '/' + String(allD.Night.HoursOfIce) + "h" +'/' + String(allD.Night.HoursOfSnow) + "h"  ,
          nightProb: allD.Night.RainProbability + '%' + ' / ' + String(allD.Night.SnowProbability) + '%' + ' / ' + String(allD.Night.IceProbability) + '%',
          nightVal:  allD.Night.Rain.Value +  allD.Night.Rain.Unit + ' / ' + allD.Night.Snow.Value +  allD.Night.Snow.Unit + ' / ' + allD.Night.Ice.Value + allD.Night.Ice.Unit,
@@ -324,16 +323,21 @@ class App extends Component {
          nightWindS:  allD.Night.Wind.Speed.Value +  allD.Night.Wind.Speed.Unit,
          nightWindG:  allD.Night.WindGust.Speed.Value + allD.Night.WindGust.Speed.Unit,
          nightWindDir: passKeyHere[1](allD.Night.Wind.Direction.Degrees),
-
         })
+
+        
+        this.setState({stlState:'showCls'})
+
     })  
-    })//then
+    })
     };
+
     render(){ 
     return(
       <div className = {['weather__container', 'container'].join(' ')}>
         <PanelBody dataB={this.state} mainF ={this.callonClick}   parentCb={this.childCompData}/>
-        <PanelHead data ={this.state} funccf ={this.ChangeToF}/>
+        <PanelHead data ={this.state} funccf ={this.ChangeToF}  timeD = {this.interval}/>
+        
       </div>
     )      
   }

@@ -3,7 +3,8 @@
   margin-top: 5%;
   border: 10px solid #cecece;
   width: 70%;
-  background-color: #e5e5e5;
+  /*background-color: #e5e5e5;*/
+  background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%); 
   opacity: 0.9;
   display: -ms-flexbox;
   display: flex;
@@ -473,7 +474,7 @@ font-family: 'Berlin Sans FB'
 
 #bodyDiv {
   width:440px;
-  margin-top:10%;
+  margin-top:8%;
 }
 
 #weatherImg {
@@ -564,7 +565,7 @@ font-family: 'Berlin Sans FB'
   display: flex;
   flex-flow: column;
   padding-left: 2%;
-
+  padding-bottom: 10%;
 }
 
 #valCont1{
@@ -583,6 +584,7 @@ font-family: 'Berlin Sans FB'
  background-color:#c1c1c1;
  padding-top:5%;
  border: 1px solid #b7b7b7;
+ padding-bottom: 10%;
 }
 
 .expDiv1 {
@@ -612,4 +614,38 @@ font-family: 'Berlin Sans FB'
 #siteName:-webkit-autofill:focus,
 #siteName:-webkit-autofill:active, #siteName1:-webkit-autofill:hover, #siteName1:-webkit-autofill:focus, #siteName1:-webkit-autofill:active {
   background-color:#e5e5e5 !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.example-enter {
+  opacity: 0.01;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.example-leave {
+  opacity: 1;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
 }

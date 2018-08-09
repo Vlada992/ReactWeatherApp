@@ -2,6 +2,8 @@
 import React from 'react';
 import { Component } from 'react';
 import './App.css';
+import { CSSTransitionGroup } from 'react-transition-group'
+
 
 
 
@@ -117,7 +119,15 @@ class PanelHead extends Component{
     }
 }
 
+/*callTime(){
+  console.log('vreme:', timeD)
+
+}*/
+
   render(){
+
+    console.log('vreme:', this.props.timeD)
+
     return (
       <div className={this.props.data.stlState} id='headDiv'>
         <div><img id='weatherImg' alt='accuweather.com' src={`http://apidev.accuweather.com/developers/Media/Default/WeatherIcons/${this.props.data.weathIcn === 0 ? '0' + 1 : this.props.data.weathIcn}-s.png`}/></div>
@@ -139,3 +149,48 @@ class PanelHead extends Component{
   }
 };
 export default PanelHead;
+
+
+
+/*
+class TodoList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {items: ['hello', 'world', 'click', 'me']};
+    this.handleAdd = this.handleAdd.bind(this);
+  }
+
+  handleAdd() {
+    const newItems = this.state.items.concat([
+      prompt('Enter some text')
+    ]);
+    this.setState({items: newItems});
+  }
+
+  handleRemove(i) {
+    let newItems = this.state.items.slice();
+    newItems.splice(i, 1);
+    this.setState({items: newItems});
+  }
+
+  render() {
+    const items = this.state.items.map((item, i) => (
+      <div key={item} onClick={() => this.handleRemove(i)}>
+        {item}
+      </div>
+    ));
+
+    return (
+      <div>
+        <button onClick={this.handleAdd}>Add Item</button>
+        <CSSTransitionGroup
+          transitionName="example"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={300}>
+          {items}
+        </CSSTransitionGroup>
+      </div>
+    );
+  }
+}
+*/

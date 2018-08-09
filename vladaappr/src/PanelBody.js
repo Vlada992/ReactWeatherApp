@@ -330,7 +330,7 @@ expandNightF1(){
 
   render(){
     return(
-        <div id='bodyDiv'> 
+        <div className={this.props.dataB.stlState} id='bodyDiv'> 
         
         <form id='hitForm' onSubmit={(e)=> this.props.mainF(e)}>
         <input type="text" className='form-control' id='siteName' placeholder='Type city...'/> 

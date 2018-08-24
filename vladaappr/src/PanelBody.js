@@ -332,9 +332,9 @@ expandNightF1(){
     return(
         <div className={this.props.dataB.stlState} id='bodyDiv'> 
         
-        <form id='hitForm' onSubmit={(e)=> this.props.mainF(e)}>
-        <input type="text" className='form-control' id='siteName' placeholder='Type city...'/> 
-         <input type="text" className='form-control' id='siteName1' placeholder='Type country...'/> 
+        <form id='hitForm' onSubmit={ (e)=> this.props.mainF(e) }>
+        <input onChange = {(e) => this.props.siteFormN(e, 'name')} type="text" className='form-control' id='siteName' placeholder='Type city...' /> 
+         <input onChange = {(e) => this.props.siteFormN(e, 'name1')} type="text" className='form-control' id='siteName1' placeholder='Type country...'  /> 
          <input type='submit' className='form-control' id='submitName'/>
         </form> 
 

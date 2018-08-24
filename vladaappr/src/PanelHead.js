@@ -148,11 +148,11 @@ class PanelHead extends Component{
     )
   }
 };
-export default PanelHead;
+//export default PanelHead;
 
 
 
-/*
+
 class TodoList extends React.Component {
   constructor(props) {
     super(props);
@@ -167,7 +167,7 @@ class TodoList extends React.Component {
     this.setState({items: newItems});
   }
 
-  handleRemove(i) {
+  handleRemove(i){
     let newItems = this.state.items.slice();
     newItems.splice(i, 1);
     this.setState({items: newItems});
@@ -193,4 +193,9 @@ class TodoList extends React.Component {
     );
   }
 }
-*/
+
+
+export {
+  PanelHead,
+  TodoList
+}

@@ -7,5 +7,3 @@ import registerServiceWorker from './registerServiceWorker';
 ReactDOM.render(<App/>, document.getElementById('root'));
 registerServiceWorker();
 
-//ReactDOM.render(<App/>,)  it's like calling functions, we do now that componets are created in funcs or classeS.
-//so, like calling functions, and passing smth to them.

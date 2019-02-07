@@ -6,7 +6,7 @@ import './App.css';
 import {PanelHead} from './PanelHead.js';
 import PanelBody from './PanelBody.js';
 import axios from 'axios';
-import {TodoList} from './PanelHead.js';
+/*import {TodoList} from './PanelHead.js';*/
 
 class App extends Component {
     constructor(props){
@@ -15,14 +15,6 @@ class App extends Component {
         this.formFunc = this.formFunc.bind(this);
         this.childCompData = this.childCompData.bind(this);
         this.togleR = false;
-        this.cels  = '℃';
-        this.fahr = '℉';
-        this.mlbr = 'mb'
-        this.inhg = 'inHg'
-        this.km = 'km';
-        this.mi = 'mi';
-        this.fit = 'ft';
-        this.m = 'm';
         this.clickArr = [];
         this.gradArr=[];
         this.formArr = [];
@@ -107,7 +99,10 @@ class App extends Component {
             holdGrad:'',
             holdCountry:'',
             idCity:'',
-            idCountry:''
+            idCountry:'',
+            unit: ['℃','F','mb','inHg','km','mi','ft','m'],
+            toglers:[false, false, false, false, false, false,false, false, false, false],
+            seeIt: ['hideDiv', 'showDiv']
 
         }
     };
@@ -119,9 +114,9 @@ class App extends Component {
             this.callonClick(e);
         }
         }
-    }
+    }; //this will be called only on enter of component, only once.
 
-    childCompData(cityColorD, tempColor, tempColorInn){
+    childCompData(cityColorD, tempColor, tempColorInn){ 
         this.setState({
             cityClr:cityColorD,
             tempClr:tempColor,
@@ -141,13 +136,10 @@ class App extends Component {
 
      callonClick(e){
      e.preventDefault();
-     
-     console.log($)    
      this.clickArr.push('clicked');
      //let holdGrad; document.getElementById('siteName').value
      this.gradArr.push(this.state.holdGrad);
      //let holdCountry = document.getElementById('siteName1').value
-
      localStorage.setItem('gradovi', this.state.holdGrad) 
      localStorage.setItem('drzava', this.state.holdCountry)
      localStorage.setItem('gradovi2', this.gradArr[this.gradArr.length -1]   )
@@ -159,8 +151,7 @@ class App extends Component {
         localStorage.setItem('gradovi', this.gradArr[this.gradArr.length -1])
     }
 
-     var initialValue = 'type city...';
-     var initialValue1 = 'type country...';
+     var initialValue = 'type city...', initialValue1 = 'type country...'
 
      var query =  document.getElementById('siteName');
      var query1 = document.getElementById('siteName1');
@@ -171,28 +162,24 @@ class App extends Component {
      query1.value = ''
      query.value =''
 
-
-     axios.get("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG&q="+String(localStorage.getItem('gradovi1')) +"%20"+String(localStorage.getItem('drzava'))+"&details=true&offset=7")
+     axios.get("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=u77BxK7btrmFq5ipbObhc868Ly8wkySl&q="+String(localStorage.getItem('gradovi1')) +"%20"+String(localStorage.getItem('drzava'))+"&details=true&offset=7")
      .then(locInfo =>{ 
          console.log(locInfo)
         clearInterval(this.interval);
-        console.log(locInfo.data["0"].GeoPosition.Latitude);
-
+        console.log(locInfo.data["0"].GeoPosition.Latitude);  //Ovde je problem?!:
         var lat   = locInfo.data["0"].GeoPosition.Latitude;
-        
         var long  = locInfo.data["0"].GeoPosition.Longitude;
         var targetDate = new Date();
         var timestamp = targetDate.getTime()/1000 + targetDate.getTimezoneOffset() * 60;
         var apikey = 'AIzaSyDQYoYpB-CyL4Leg5IWW1pT0afaVD9z4J0';
         var apicall = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + lat + "," + long + '&timestamp=' + timestamp + '&key=' + apikey
         axios.get(apicall)
-        .then((timeResp)=>{
+        .then(timeResp =>{
         var offsets = timeResp.data.dstOffset * 1000 + timeResp.data.rawOffset * 1000
         var localdate = new Date(timestamp * 1000 + offsets)
         var refreshDate = new Date() 
         var millisecondselapsed = refreshDate - targetDate
         localdate.setMilliseconds(localdate.getMilliseconds()+ millisecondselapsed)
-
         var toLocStr = localdate.toLocaleString();
         this.interval= setInterval(()=>{   
         localdate.setSeconds(localdate.getSeconds()+1)
@@ -221,7 +208,7 @@ class App extends Component {
                             timeZn,
                             tmZonUrl,
                             keyState:`${takeKey}`         
-                        })
+                        }) 
                         var windDirect =  function windDirect(degree){
                             if (degree > 337.5) return 'Northerly';
                             if (degree > 292.5) return 'North Westerly';
@@ -235,8 +222,8 @@ class App extends Component {
                         };
                   return [takeKey, windDirect]                 
      })
-     .then((pickKey)=>{
-        axios.get("http://dataservice.accuweather.com/currentconditions/v1/" + pickKey[0] + "?apikey=HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG&details=true")
+     .then(pickKey =>{
+        axios.get("http://dataservice.accuweather.com/currentconditions/v1/" + pickKey[0] + "?apikey=u77BxK7btrmFq5ipbObhc868Ly8wkySl&details=true")
      .then(response => {
                 console.log("weather data:", response);
                 let v = response.data['0'];
@@ -289,8 +276,8 @@ class App extends Component {
      })
         return pickKey
     })
-    .then((passKeyHere)=>{
-        axios.get("http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + passKeyHere[0] + "?apikey=HfaXex7wS5DWxahQDP2lr7Ees4DOTXiG&details=true&metric=true")
+    .then(passKeyHere =>{
+        axios.get("http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + passKeyHere[0] + "?apikey=u77BxK7btrmFq5ipbObhc868Ly8wkySl&details=true&metric=true")
         .then(resp5Days => {
         console.log('5days res:', resp5Days);
         let allD  =  resp5Days.data.DailyForecasts[1];
@@ -355,8 +342,6 @@ class App extends Component {
       <div className = {['weather__container', 'container'].join(' ')}>
         <PanelBody dataB={this.state} mainF ={this.callonClick}   parentCb={this.childCompData}  siteFormN = {this.formFunc}/>
         <PanelHead data ={this.state} funccf ={this.ChangeToF}  timeD = {this.interval}/>
-        <TodoList/>
-        
       </div>
     )      
   }
